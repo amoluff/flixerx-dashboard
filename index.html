@@ -50,7 +50,6 @@ body { background: #0d0d1a; color: #fff; font-family: 'Segoe UI', sans-serif; mi
 </div>
 
 <div class="container">
-
   <div id="loginSection">
     <div class="hero">
       <h1>FlixerX Dashboard</h1>
@@ -67,7 +66,6 @@ body { background: #0d0d1a; color: #fff; font-family: 'Segoe UI', sans-serif; mi
       <div class="loading">جاري التحميل...</div>
     </div>
   </div>
-
 </div>
 
 <div class="modal" id="settingsModal">
@@ -88,16 +86,27 @@ body { background: #0d0d1a; color: #fff; font-family: 'Segoe UI', sans-serif; mi
 <script>
 const WORKER_URL = 'https://calm-meadow-991a.122007aboudiii.workers.dev';
 const CLIENT_ID = '1356316450616508657';
-const REDIRECT_URI = window.location.origin + window.location.pathname + 'callback';
+const REDIRECT_URI = 'https://amoluff.github.io/flixerx-dashboard/callback';
 
 let accessToken = null;
 let currentGuildId = null;
 
 async function checkCallback() {
-  const params = new URLSearchParams(window.location.search);
+  // قراءة الـ code من URL مباشرة أو من sessionStorage
+  let search = window.location.search;
+  
+  // لو جاي من 404.html redirect
+  if (!search) {
+    search = sessionStorage.getItem('oauth_redirect') || '';
+  }
+  sessionStorage.removeItem('oauth_redirect');
+
+  const params = new URLSearchParams(search);
   const code = params.get('code');
   if (!code) return false;
+
   window.history.replaceState({}, '', window.location.pathname);
+
   try {
     const res = await fetch(`${WORKER_URL}/auth/callback`, {
       method: 'POST',
@@ -110,7 +119,9 @@ async function checkCallback() {
       accessToken = data.access_token;
       return true;
     }
-  } catch(e) {}
+  } catch(e) {
+    console.error('Auth error:', e);
+  }
   return false;
 }
 
