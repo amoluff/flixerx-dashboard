@@ -167,7 +167,9 @@ body {
   border-radius: 20px;
   padding: 28px;
   width: 92%;
-  max-width: 480px;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 .modal-box h2 { color: #a855f7; margin-bottom: 6px; font-size: 18px; }
 .modal-guild-name { color: #666; font-size: 13px; margin-bottom: 20px; }
@@ -266,11 +268,124 @@ body {
 
 .loading { text-align: center; padding: 60px; color: #444; }
 
+/* ─── الرتب التلقائية ─────────────────────────────────────────────────────── */
+.auto-roles-layout {
+  display: flex;
+  gap: 14px;
+}
+.auto-role-panel {
+  flex: 1;
+  background: #0a0a14;
+  border: 1px solid #7c3aed33;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.auto-role-panel-title {
+  font-size: 12px;
+  color: #888;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+.current-role-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a1a2e;
+  border: 1px solid #7c3aed33;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  min-height: 38px;
+}
+.current-role-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.current-role-name { color: #ddd; flex: 1; }
+.no-role-text { color: #444; font-size: 12px; }
+
+.roles-list {
+  width: 100%;
+  max-height: 160px;
+  overflow-y: auto;
+  background: #0a0a14;
+  border: 1px solid #7c3aed33;
+  border-radius: 8px;
+}
+.roles-list::-webkit-scrollbar { width: 4px; }
+.roles-list::-webkit-scrollbar-track { background: #0a0a14; }
+.roles-list::-webkit-scrollbar-thumb { background: #7c3aed44; border-radius: 4px; }
+
+.role-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #aaa;
+  transition: 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.role-item:hover { background: #7c3aed22; color: #fff; }
+.role-item.selected { background: #7c3aed33; color: #a855f7; }
+.role-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.role-search {
+  width: 100%;
+  padding: 8px 12px;
+  background: #0a0a14;
+  border: 1px solid #7c3aed33;
+  border-radius: 8px 8px 0 0;
+  color: #fff;
+  font-size: 13px;
+  outline: none;
+  border-bottom: none;
+}
+.role-search:focus { border-color: #a855f7; }
+.role-search::placeholder { color: #444; }
+
+.auto-role-actions {
+  display: flex;
+  gap: 6px;
+}
+.btn-sm {
+  padding: 7px 14px;
+  font-size: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+  flex: 1;
+}
+.btn-sm-success {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: #fff;
+}
+.btn-sm-success:hover { opacity: 0.9; }
+.btn-sm-danger {
+  background: #1a0a0a;
+  color: #f87171;
+  border: 1px solid #f8717133;
+}
+.btn-sm-danger:hover { background: #f87171; color: #fff; }
+
 @media (max-width: 600px) {
   .hero h1 { font-size: 26px; }
   .navbar { padding: 12px 16px; }
   .guilds-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .guild-card { padding: 16px 12px; }
+  .auto-roles-layout { flex-direction: column; }
 }
 </style>
 </head>
@@ -312,8 +427,10 @@ body {
 
     <div class="tabs">
       <button class="tab active" onclick="switchTab('suggestions')" id="tabSuggestions">📝 الاقتراحات</button>
+      <button class="tab" onclick="switchTab('autoRoles')" id="tabAutoRoles">🎭 الرتب التلقائية</button>
     </div>
 
+    <!-- تاب الاقتراحات -->
     <div class="tab-content active" id="tabSuggestionsContent">
       <div class="input-group">
         <label id="channelLabel">قناة الاقتراحات</label>
@@ -325,12 +442,55 @@ body {
           </div>
         </div>
       </div>
+      <div id="alertBox2"></div>
+      <div class="modal-actions">
+        <button class="btn btn-success" onclick="saveSettings()" id="saveBtn">✅ إرسال</button>
+        <button class="btn btn-danger" onclick="closeModal()" id="cancelBtn">إلغاء</button>
+      </div>
     </div>
 
-    <div class="modal-actions">
-      <button class="btn btn-success" onclick="saveSettings()" id="saveBtn">✅ إرسال</button>
-      <button class="btn btn-danger" onclick="closeModal()" id="cancelBtn">إلغاء</button>
+    <!-- تاب الرتب التلقائية -->
+    <div class="tab-content" id="tabAutoRolesContent">
+      <div id="autoRolesAlertBox"></div>
+      <div class="auto-roles-layout">
+
+        <!-- رتبة الأعضاء -->
+        <div class="auto-role-panel">
+          <div class="auto-role-panel-title">👤 رتبة الأعضاء</div>
+          <div class="current-role-badge" id="currentMemberRoleBadge">
+            <div class="current-role-dot" id="currentMemberRoleDot" style="background:#444"></div>
+            <span class="no-role-text" id="currentMemberRoleName">لا توجد رتبة محددة</span>
+          </div>
+          <input type="text" class="role-search" id="memberRoleSearch" placeholder="🔍 ابحث عن رتبة..." oninput="filterRoles('member')">
+          <div class="roles-list" id="memberRolesList">
+            <div class="loading-channels">جاري التحميل...</div>
+          </div>
+          <div class="auto-role-actions">
+            <button class="btn-sm btn-sm-success" onclick="saveAutoRole('member')">✅ حفظ</button>
+            <button class="btn-sm btn-sm-danger" onclick="clearAutoRole('member')">🗑️ إلغاء</button>
+          </div>
+        </div>
+
+        <!-- رتبة البوتات -->
+        <div class="auto-role-panel">
+          <div class="auto-role-panel-title">🤖 رتبة البوتات</div>
+          <div class="current-role-badge" id="currentBotRoleBadge">
+            <div class="current-role-dot" id="currentBotRoleDot" style="background:#444"></div>
+            <span class="no-role-text" id="currentBotRoleName">لا توجد رتبة محددة</span>
+          </div>
+          <input type="text" class="role-search" id="botRoleSearch" placeholder="🔍 ابحث عن رتبة..." oninput="filterRoles('bot')">
+          <div class="roles-list" id="botRolesList">
+            <div class="loading-channels">جاري التحميل...</div>
+          </div>
+          <div class="auto-role-actions">
+            <button class="btn-sm btn-sm-success" onclick="saveAutoRole('bot')">✅ حفظ</button>
+            <button class="btn-sm btn-sm-danger" onclick="clearAutoRole('bot')">🗑️ إلغاء</button>
+          </div>
+        </div>
+
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -345,6 +505,13 @@ let currentLang = 'ar';
 let allChannels = [];
 let selectedChannelId = null;
 
+// ─── الرتب التلقائية ────────────────────────────────────────────────────────
+let allRoles = [];
+let selectedMemberRoleId = null;
+let selectedBotRoleId = null;
+let currentMemberRoleId = null;
+let currentBotRoleId = null;
+
 const translations = {
   ar: {
     heroTitle: 'FlixerX Dashboard',
@@ -358,6 +525,7 @@ const translations = {
     settings: 'الإعدادات',
     modalTitle: '⚙️ إعدادات السيرفر',
     tabSuggestions: '📝 الاقتراحات',
+    tabAutoRoles: '🎭 الرتب التلقائية',
     channelLabel: 'قناة الاقتراحات',
     channelsLoading: 'جاري تحميل القنوات...',
     saveBtn: '✅ إرسال',
@@ -382,6 +550,7 @@ const translations = {
     settings: 'Settings',
     modalTitle: '⚙️ Server Settings',
     tabSuggestions: '📝 Suggestions',
+    tabAutoRoles: '🎭 Auto Roles',
     channelLabel: 'Suggestions Channel',
     channelsLoading: 'Loading channels...',
     saveBtn: '✅ Save',
@@ -414,6 +583,7 @@ function updateTexts() {
   document.getElementById('sectionSub').textContent = t('sectionSub');
   document.getElementById('modalTitle').textContent = t('modalTitle');
   document.getElementById('tabSuggestions').textContent = t('tabSuggestions');
+  document.getElementById('tabAutoRoles').textContent = t('tabAutoRoles');
   document.getElementById('channelLabel').textContent = t('channelLabel');
   document.getElementById('saveBtn').textContent = t('saveBtn');
   document.getElementById('cancelBtn').textContent = t('cancelBtn');
@@ -461,6 +631,12 @@ function logout() {
 
 function showAlert(msg, type) {
   const box = document.getElementById('alertBox');
+  box.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
+  setTimeout(() => box.innerHTML = '', 4000);
+}
+
+function showAutoRolesAlert(msg, type) {
+  const box = document.getElementById('autoRolesAlertBox');
   box.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
   setTimeout(() => box.innerHTML = '', 4000);
 }
@@ -537,19 +713,31 @@ async function openModal(guildId, guildName) {
   currentGuildId = guildId;
   selectedChannelId = null;
   allChannels = [];
+  allRoles = [];
+  selectedMemberRoleId = null;
+  selectedBotRoleId = null;
+
   document.getElementById('modalGuildName').textContent = guildName;
   document.getElementById('channelPickerWrap').style.display = 'none';
   document.getElementById('channelsLoading').style.display = 'block';
   document.getElementById('channelsLoading').textContent = t('channelsLoading');
   document.getElementById('channelSearch').value = '';
+  document.getElementById('memberRoleSearch').value = '';
+  document.getElementById('botRoleSearch').value = '';
+  document.getElementById('memberRolesList').innerHTML = '<div class="loading-channels">جاري التحميل...</div>';
+  document.getElementById('botRolesList').innerHTML = '<div class="loading-channels">جاري التحميل...</div>';
   document.getElementById('settingsModal').classList.add('active');
 
-  try {
-    const res = await fetch(`${WORKER_URL}/guild/${guildId}/channels`, {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    });
-    const data = await res.json();
+  // تحميل القنوات والرتب معاً
+  const [channelsRes, rolesRes, autoRolesRes] = await Promise.allSettled([
+    fetch(`${WORKER_URL}/guild/${guildId}/channels`, { headers: { Authorization: `Bearer ${accessToken}` } }),
+    fetch(`${WORKER_URL}/guild/${guildId}/roles`, { headers: { Authorization: `Bearer ${accessToken}` } }),
+    fetch(`${WORKER_URL}/guild/${guildId}/auto-roles`, { headers: { Authorization: `Bearer ${accessToken}` } })
+  ]);
 
+  // معالجة القنوات
+  try {
+    const data = await channelsRes.value.json();
     if (data.channels && data.channels.length > 0) {
       allChannels = data.channels;
       renderChannels(allChannels);
@@ -561,19 +749,167 @@ async function openModal(guildId, guildName) {
   } catch(e) {
     document.getElementById('channelsLoading').textContent = t('connError');
   }
+
+  // معالجة الرتب الحالية
+  try {
+    const autoData = await autoRolesRes.value.json();
+    currentMemberRoleId = autoData.member_role_id || null;
+    currentBotRoleId = autoData.bot_role_id || null;
+  } catch(e) {
+    currentMemberRoleId = null;
+    currentBotRoleId = null;
+  }
+
+  // معالجة قائمة الرتب
+  try {
+    const rolesData = await rolesRes.value.json();
+    if (rolesData.roles && rolesData.roles.length > 0) {
+      allRoles = rolesData.roles;
+      updateCurrentRoleDisplay('member');
+      updateCurrentRoleDisplay('bot');
+      renderRoles('member', allRoles);
+      renderRoles('bot', allRoles);
+    } else {
+      document.getElementById('memberRolesList').innerHTML = '<div class="loading-channels">ما في رتب</div>';
+      document.getElementById('botRolesList').innerHTML = '<div class="loading-channels">ما في رتب</div>';
+    }
+  } catch(e) {
+    document.getElementById('memberRolesList').innerHTML = '<div class="loading-channels">حدث خطأ</div>';
+    document.getElementById('botRolesList').innerHTML = '<div class="loading-channels">حدث خطأ</div>';
+  }
+}
+
+function roleColor(color) {
+  if (!color || color === 0) return '#444';
+  return '#' + color.toString(16).padStart(6, '0');
+}
+
+function updateCurrentRoleDisplay(type) {
+  const currentId = type === 'member' ? currentMemberRoleId : currentBotRoleId;
+  const dotEl = document.getElementById(type === 'member' ? 'currentMemberRoleDot' : 'currentBotRoleDot');
+  const nameEl = document.getElementById(type === 'member' ? 'currentMemberRoleName' : 'currentBotRoleName');
+  if (currentId) {
+    const role = allRoles.find(r => r.id === currentId);
+    if (role) {
+      dotEl.style.background = roleColor(role.color);
+      nameEl.textContent = role.name;
+      nameEl.className = 'current-role-name';
+    }
+  } else {
+    dotEl.style.background = '#444';
+    nameEl.textContent = type === 'member' ? 'لا توجد رتبة محددة' : 'لا توجد رتبة محددة';
+    nameEl.className = 'no-role-text';
+  }
+}
+
+function filterRoles(type) {
+  const searchId = type === 'member' ? 'memberRoleSearch' : 'botRoleSearch';
+  const q = document.getElementById(searchId).value.toLowerCase();
+  const filtered = allRoles.filter(r => r.name.toLowerCase().includes(q));
+  renderRoles(type, filtered);
+}
+
+function renderRoles(type, roles) {
+  const listId = type === 'member' ? 'memberRolesList' : 'botRolesList';
+  const selectedId = type === 'member' ? selectedMemberRoleId : selectedBotRoleId;
+  const list = document.getElementById(listId);
+  if (roles.length === 0) {
+    list.innerHTML = '<div class="loading-channels" style="padding:10px">ما في نتائج</div>';
+    return;
+  }
+  list.innerHTML = roles.map(r => `
+    <div class="role-item ${selectedId === r.id ? 'selected' : ''}" onclick="selectRole('${type}','${r.id}')">
+      <div class="role-dot" style="background:${roleColor(r.color)}"></div>
+      ${r.name}
+    </div>
+  `).join('');
+}
+
+function selectRole(type, id) {
+  if (type === 'member') {
+    selectedMemberRoleId = id;
+    renderRoles('member', allRoles.filter(r => r.name.toLowerCase().includes(
+      document.getElementById('memberRoleSearch').value.toLowerCase()
+    )));
+  } else {
+    selectedBotRoleId = id;
+    renderRoles('bot', allRoles.filter(r => r.name.toLowerCase().includes(
+      document.getElementById('botRoleSearch').value.toLowerCase()
+    )));
+  }
+}
+
+async function saveAutoRole(type) {
+  const selectedId = type === 'member' ? selectedMemberRoleId : selectedBotRoleId;
+  if (!selectedId) {
+    showAutoRolesAlert(type === 'member' ? 'اختر رتبة للأعضاء أولاً' : 'اختر رتبة للبوتات أولاً', 'error');
+    return;
+  }
+  try {
+    const body = {
+      member_role_id: type === 'member' ? selectedId : currentMemberRoleId,
+      bot_role_id: type === 'bot' ? selectedId : currentBotRoleId
+    };
+    const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-roles`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (data.success) {
+      if (type === 'member') currentMemberRoleId = selectedId;
+      else currentBotRoleId = selectedId;
+      updateCurrentRoleDisplay(type);
+      showAutoRolesAlert('تم الحفظ بنجاح ✅', 'success');
+    } else {
+      showAutoRolesAlert(`${t('saveError')}: ${data.error}`, 'error');
+    }
+  } catch(e) {
+    showAutoRolesAlert(t('connError'), 'error');
+  }
+}
+
+async function clearAutoRole(type) {
+  try {
+    const body = {
+      member_role_id: type === 'member' ? null : currentMemberRoleId,
+      bot_role_id: type === 'bot' ? null : currentBotRoleId
+    };
+    const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-roles`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (data.success) {
+      if (type === 'member') { currentMemberRoleId = null; selectedMemberRoleId = null; }
+      else { currentBotRoleId = null; selectedBotRoleId = null; }
+      updateCurrentRoleDisplay(type);
+      renderRoles(type, allRoles);
+      showAutoRolesAlert('تم الإلغاء بنجاح ✅', 'success');
+    } else {
+      showAutoRolesAlert(`${t('saveError')}: ${data.error}`, 'error');
+    }
+  } catch(e) {
+    showAutoRolesAlert(t('connError'), 'error');
+  }
 }
 
 function closeModal() {
   document.getElementById('settingsModal').classList.remove('active');
   currentGuildId = null;
   selectedChannelId = null;
+  selectedMemberRoleId = null;
+  selectedBotRoleId = null;
+  switchTab('suggestions');
 }
 
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
-  document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}Content`).classList.add('active');
+  const key = tab.charAt(0).toUpperCase() + tab.slice(1);
+  document.getElementById(`tab${key}`).classList.add('active');
+  document.getElementById(`tab${key}Content`).classList.add('active');
 }
 
 async function saveSettings() {
