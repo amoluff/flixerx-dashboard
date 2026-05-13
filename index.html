@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FlixerX Dashboard</title>
+<script>
+// حفظ الـ code فوراً قبل أي redirect
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+  if (code) {
+    sessionStorage.setItem('discord_code', code);
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+})();
+</script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -473,10 +484,9 @@ function login() {
 function logout() { localStorage.removeItem('discord_token'); location.reload(); }
 
 async function checkCallback() {
-  let search = window.location.search || sessionStorage.getItem('oauth_redirect') || '';
-  sessionStorage.removeItem('oauth_redirect');
-  const code = new URLSearchParams(search).get('code');
+  const code = sessionStorage.getItem('discord_code') || new URLSearchParams(window.location.search).get('code');
   if (!code) return;
+  sessionStorage.removeItem('discord_code');
   window.history.replaceState({}, '', window.location.pathname);
   try {
     const res = await fetch(`${WORKER_URL}/auth/callback`, {
@@ -484,7 +494,12 @@ async function checkCallback() {
       body: JSON.stringify({ code })
     });
     const data = await res.json();
-    if (data.access_token) { localStorage.setItem('discord_token', data.access_token); accessToken = data.access_token; }
+    if (data.access_token) {
+      localStorage.setItem('discord_token', data.access_token);
+      accessToken = data.access_token;
+    } else {
+      localStorage.removeItem('discord_token');
+    }
   } catch(e) {}
 }
 
