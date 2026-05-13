@@ -14,6 +14,7 @@ body {
   min-height: 100vh;
 }
 
+/* ── Navbar ── */
 .navbar {
   background: #0d0d1e;
   padding: 14px 28px;
@@ -25,16 +26,8 @@ body {
   top: 0;
   z-index: 100;
 }
-.logo {
-  font-size: 20px;
-  font-weight: bold;
-  color: #a855f7;
-}
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.logo { font-size: 20px; font-weight: bold; color: #a855f7; }
+.nav-right { display: flex; align-items: center; gap: 12px; }
 .lang-btn {
   background: #1a1a2e;
   border: 1px solid #7c3aed44;
@@ -47,6 +40,7 @@ body {
 }
 .lang-btn:hover { background: #7c3aed22; }
 
+/* ── Buttons ── */
 .btn {
   padding: 10px 22px;
   border-radius: 10px;
@@ -56,33 +50,32 @@ body {
   font-weight: bold;
   transition: 0.2s;
 }
-.btn-primary {
-  background: linear-gradient(135deg, #7c3aed, #a855f7);
-  color: #fff;
-}
+.btn-primary { background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff; }
 .btn-primary:hover { opacity: 0.9; }
-.btn-success {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
-  color: #fff;
-}
+.btn-success { background: linear-gradient(135deg, #16a34a, #22c55e); color: #fff; }
 .btn-success:hover { opacity: 0.9; }
-.btn-danger {
-  background: #1a0a0a;
-  color: #f87171;
-  border: 1px solid #f8717133;
-}
+.btn-danger { background: #1a0a0a; color: #f87171; border: 1px solid #f8717133; }
 .btn-danger:hover { background: #f87171; color: #fff; }
-
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 20px;
+.btn-back {
+  background: #1a1a2e;
+  border: 1px solid #7c3aed33;
+  color: #888;
+  padding: 8px 18px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s;
 }
+.btn-back:hover { color: #fff; border-color: #7c3aed88; }
 
-#loginSection {
-  text-align: center;
-  padding: 100px 20px;
-}
+/* ── Container ── */
+.container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+/* ── Login ── */
+#loginSection { text-align: center; padding: 100px 20px; }
 .hero h1 {
   font-size: 38px;
   background: linear-gradient(135deg, #a855f7, #7c3aed);
@@ -92,9 +85,11 @@ body {
 }
 .hero p { color: #888; font-size: 16px; margin-bottom: 32px; }
 
+/* ── Guilds Page ── */
 #dashSection { padding: 32px 0; }
-.section-title { color: #a855f7; font-size: 22px; margin-bottom: 6px; }
-.section-sub { color: #555; font-size: 14px; margin-bottom: 28px; }
+.page-header { margin-bottom: 28px; }
+.section-title { color: #a855f7; font-size: 22px; }
+.section-sub { color: #555; font-size: 14px; margin-top: 4px; }
 
 .guilds-grid {
   display: grid;
@@ -112,45 +107,74 @@ body {
   gap: 10px;
   transition: 0.2s;
 }
-.guild-card:hover {
-  border-color: #7c3aed66;
-  transform: translateY(-2px);
-}
+.guild-card:hover { border-color: #7c3aed66; transform: translateY(-2px); }
 .guild-icon {
-  width: 62px;
-  height: 62px;
+  width: 62px; height: 62px;
   border-radius: 50%;
   background: #7c3aed22;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  font-weight: bold;
-  color: #a855f7;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: bold; color: #a855f7;
   overflow: hidden;
   border: 2px solid #7c3aed33;
 }
 .guild-icon img { width: 100%; height: 100%; object-fit: cover; }
-.guild-name {
-  font-size: 15px;
-  font-weight: bold;
-  text-align: center;
-  color: #eee;
-}
-.badge {
-  font-size: 11px;
-  padding: 3px 12px;
-  border-radius: 20px;
-  background: #7c3aed22;
-  color: #a855f7;
-  border: 1px solid #7c3aed33;
-}
-.badge-member {
-  background: #1a1a2e;
-  color: #444;
-  border-color: #333;
-}
+.guild-name { font-size: 15px; font-weight: bold; text-align: center; color: #eee; }
+.badge { font-size: 11px; padding: 3px 12px; border-radius: 20px; background: #7c3aed22; color: #a855f7; border: 1px solid #7c3aed33; }
+.badge-member { background: #1a1a2e; color: #444; border-color: #333; }
 
+/* ── Server Settings Page ── */
+#serverSection { padding: 32px 0; display: none; }
+.server-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.server-icon-lg {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: #7c3aed22;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: bold; color: #a855f7;
+  overflow: hidden;
+  border: 2px solid #7c3aed44;
+  flex-shrink: 0;
+}
+.server-icon-lg img { width: 100%; height: 100%; object-fit: cover; }
+.server-header-info h2 { color: #fff; font-size: 18px; }
+.server-header-info p { color: #555; font-size: 13px; margin-top: 3px; }
+
+.settings-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 18px;
+}
+.settings-card {
+  background: #0f0f1e;
+  border: 1px solid #7c3aed22;
+  border-radius: 16px;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+  text-align: center;
+}
+.settings-card:hover { border-color: #a855f7; background: #12122a; transform: translateY(-2px); }
+.settings-card-icon { font-size: 36px; }
+.settings-card-title { font-size: 15px; font-weight: bold; color: #eee; }
+.settings-card-sub { font-size: 12px; color: #555; }
+
+/* ── Alert ── */
+.alert { padding: 11px 18px; border-radius: 10px; margin-bottom: 16px; font-size: 13px; }
+.alert-success { background: #0a2a0a; color: #4ade80; border: 1px solid #4ade8033; }
+.alert-error { background: #2a0a0a; color: #f87171; border: 1px solid #f8717133; }
+
+.loading { text-align: center; padding: 60px; color: #444; }
+
+/* ── Modal ── */
 .modal {
   display: none;
   position: fixed;
@@ -167,129 +191,80 @@ body {
   border-radius: 20px;
   padding: 28px;
   width: 92%;
-  max-width: 520px;
-  max-height: 90vh;
+  max-width: 460px;
+  max-height: 88vh;
   overflow-y: auto;
+  position: relative;
 }
-.modal-box h2 { color: #a855f7; margin-bottom: 6px; font-size: 18px; }
-.modal-guild-name { color: #666; font-size: 13px; margin-bottom: 20px; }
+.modal-box::-webkit-scrollbar { width: 4px; }
+.modal-box::-webkit-scrollbar-thumb { background: #7c3aed44; border-radius: 4px; }
 
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #7c3aed22;
-  padding-bottom: 12px;
-}
-.tab {
-  padding: 7px 16px;
+.modal-close {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: #1a1a2e;
+  border: 1px solid #7c3aed33;
+  color: #888;
+  width: 30px; height: 30px;
   border-radius: 8px;
-  border: 1px solid transparent;
   cursor: pointer;
-  font-size: 13px;
-  color: #666;
-  background: none;
+  font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
   transition: 0.2s;
 }
-.tab.active {
-  background: #7c3aed22;
-  color: #a855f7;
-  border-color: #7c3aed44;
-}
+.modal-close:hover { color: #fff; border-color: #f87171; background: #2a0a0a; }
 
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+.modal-title { color: #a855f7; font-size: 16px; margin-bottom: 4px; padding-left: 38px; }
+.modal-sub { color: #555; font-size: 12px; margin-bottom: 18px; }
 
-.input-group { margin-bottom: 16px; }
-.input-group label {
-  display: block;
-  margin-bottom: 6px;
-  color: #888;
-  font-size: 13px;
-}
+/* ── Picker ── */
+.input-label { color: #888; font-size: 12px; margin-bottom: 6px; display: block; font-weight: bold; }
 
 .search-box {
   width: 100%;
-  padding: 10px 14px;
+  padding: 9px 13px;
   background: #0a0a14;
   border: 1px solid #7c3aed44;
-  border-radius: 10px 10px 0 0;
+  border-radius: 9px 9px 0 0;
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
   border-bottom: none;
 }
 .search-box:focus { border-color: #a855f7; }
 .search-box::placeholder { color: #444; }
 
-.channels-list {
+.pick-list {
   width: 100%;
-  max-height: 200px;
+  max-height: 190px;
   overflow-y: auto;
   background: #0a0a14;
   border: 1px solid #7c3aed44;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 9px 9px;
+  margin-bottom: 14px;
 }
-.channels-list::-webkit-scrollbar { width: 4px; }
-.channels-list::-webkit-scrollbar-track { background: #0a0a14; }
-.channels-list::-webkit-scrollbar-thumb { background: #7c3aed44; border-radius: 4px; }
+.pick-list::-webkit-scrollbar { width: 4px; }
+.pick-list::-webkit-scrollbar-thumb { background: #7c3aed44; border-radius: 4px; }
 
-.channel-item {
-  padding: 9px 14px;
+.pick-item {
+  padding: 8px 13px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   color: #aaa;
   transition: 0.15s;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
-.channel-item:hover { background: #7c3aed22; color: #fff; }
-.channel-item.selected { background: #7c3aed33; color: #a855f7; }
-.channel-item .ch-icon { color: #555; font-size: 13px; }
+.pick-item:hover { background: #7c3aed22; color: #fff; }
+.pick-item.selected { background: #7c3aed33; color: #a855f7; }
+.pick-icon { color: #555; font-size: 12px; }
+.role-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
-.loading-channels {
-  text-align: center;
-  padding: 20px;
-  color: #555;
-  font-size: 13px;
-}
+.loading-pick { text-align: center; padding: 16px; color: #444; font-size: 13px; }
 
-.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
-
-.alert {
-  padding: 11px 18px;
-  border-radius: 10px;
-  margin-bottom: 16px;
-  font-size: 13px;
-}
-.alert-success { background: #0a2a0a; color: #4ade80; border: 1px solid #4ade8033; }
-.alert-error { background: #2a0a0a; color: #f87171; border: 1px solid #f8717133; }
-
-.loading { text-align: center; padding: 60px; color: #444; }
-
-/* ─── الرتب التلقائية ─────────────────────────────────────────────────────── */
-.auto-roles-layout {
-  display: flex;
-  gap: 14px;
-}
-.auto-role-panel {
-  flex: 1;
-  background: #0a0a14;
-  border: 1px solid #7c3aed33;
-  border-radius: 12px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.auto-role-panel-title {
-  font-size: 12px;
-  color: #888;
-  font-weight: bold;
-  margin-bottom: 2px;
-}
-.current-role-badge {
+.current-badge {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -298,94 +273,24 @@ body {
   border-radius: 8px;
   padding: 8px 12px;
   font-size: 13px;
-  min-height: 38px;
+  margin-bottom: 10px;
+  min-height: 36px;
 }
-.current-role-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.current-role-name { color: #ddd; flex: 1; }
-.no-role-text { color: #444; font-size: 12px; }
+.current-badge-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; background: #444; }
+.current-badge-name { color: #ddd; flex: 1; }
+.current-badge-none { color: #444; flex: 1; }
 
-.roles-list {
-  width: 100%;
-  max-height: 160px;
-  overflow-y: auto;
-  background: #0a0a14;
-  border: 1px solid #7c3aed33;
-  border-radius: 8px;
-}
-.roles-list::-webkit-scrollbar { width: 4px; }
-.roles-list::-webkit-scrollbar-track { background: #0a0a14; }
-.roles-list::-webkit-scrollbar-thumb { background: #7c3aed44; border-radius: 4px; }
+.modal-actions { display: flex; gap: 8px; margin-top: 6px; }
+.modal-actions .btn { flex: 1; padding: 9px; font-size: 13px; }
 
-.role-item {
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 13px;
-  color: #aaa;
-  transition: 0.15s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.role-item:hover { background: #7c3aed22; color: #fff; }
-.role-item.selected { background: #7c3aed33; color: #a855f7; }
-.role-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.role-search {
-  width: 100%;
-  padding: 8px 12px;
-  background: #0a0a14;
-  border: 1px solid #7c3aed33;
-  border-radius: 8px 8px 0 0;
-  color: #fff;
-  font-size: 13px;
-  outline: none;
-  border-bottom: none;
-}
-.role-search:focus { border-color: #a855f7; }
-.role-search::placeholder { color: #444; }
-
-.auto-role-actions {
-  display: flex;
-  gap: 6px;
-}
-.btn-sm {
-  padding: 7px 14px;
-  font-size: 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-  flex: 1;
-}
-.btn-sm-success {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
-  color: #fff;
-}
-.btn-sm-success:hover { opacity: 0.9; }
-.btn-sm-danger {
-  background: #1a0a0a;
-  color: #f87171;
-  border: 1px solid #f8717133;
-}
-.btn-sm-danger:hover { background: #f87171; color: #fff; }
+.divider { border: none; border-top: 1px solid #7c3aed22; margin: 20px 0; }
 
 @media (max-width: 600px) {
   .hero h1 { font-size: 26px; }
   .navbar { padding: 12px 16px; }
   .guilds-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .guild-card { padding: 16px 12px; }
-  .auto-roles-layout { flex-direction: column; }
+  .settings-cards { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
@@ -401,6 +306,7 @@ body {
 
 <div class="container">
 
+  <!-- تسجيل الدخول -->
   <div id="loginSection">
     <div class="hero">
       <h1 id="heroTitle">FlixerX Dashboard</h1>
@@ -409,532 +315,399 @@ body {
     <button class="btn btn-primary" onclick="login()" id="loginBtn">تسجيل الدخول بـ Discord</button>
   </div>
 
+  <!-- السيرفرات -->
   <div id="dashSection" style="display:none">
     <div id="alertBox"></div>
-    <h2 class="section-title" id="sectionTitle">سيرفراتك</h2>
-    <p class="section-sub" id="sectionSub">السيرفرات المشتركة بينك وبين FlixerX</p>
+    <div class="page-header">
+      <div class="section-title" id="sectionTitle">سيرفراتك</div>
+      <div class="section-sub" id="sectionSub">السيرفرات المشتركة بينك وبين FlixerX</div>
+    </div>
     <div id="guildsList" class="guilds-grid">
       <div class="loading">جاري التحميل...</div>
     </div>
   </div>
 
+  <!-- إعدادات السيرفر -->
+  <div id="serverSection">
+    <div id="serverAlertBox"></div>
+    <div class="server-header">
+      <button class="btn-back" onclick="backToGuilds()">← <span id="backBtn">رجوع</span></button>
+      <div class="server-icon-lg" id="serverIconLg"></div>
+      <div class="server-header-info">
+        <h2 id="serverNameTitle"></h2>
+        <p id="serverNameSub">إعدادات السيرفر</p>
+      </div>
+    </div>
+    <div class="settings-cards">
+      <div class="settings-card" onclick="openSuggestionsModal()">
+        <div class="settings-card-icon">📝</div>
+        <div class="settings-card-title" id="cardSugTitle">الاقتراحات</div>
+        <div class="settings-card-sub" id="cardSugSub">إعداد قناة الاقتراحات</div>
+      </div>
+      <div class="settings-card" onclick="openAutoRolesModal()">
+        <div class="settings-card-icon">🎭</div>
+        <div class="settings-card-title" id="cardRolesTitle">الرتب التلقائية</div>
+        <div class="settings-card-sub" id="cardRolesSub">رتبة الأعضاء والبوتات</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<div class="modal" id="settingsModal">
+<!-- Modal: الاقتراحات -->
+<div class="modal" id="suggestionsModal">
   <div class="modal-box">
-    <h2 id="modalTitle">⚙️ إعدادات السيرفر</h2>
-    <p class="modal-guild-name" id="modalGuildName"></p>
+    <button class="modal-close" onclick="closeModal('suggestionsModal')">✕</button>
+    <div class="modal-title">📝 إعداد الاقتراحات</div>
+    <div class="modal-sub">اختر القناة التي تظهر فيها الاقتراحات</div>
+    <div id="sugAlertBox"></div>
+    <label class="input-label" id="channelLabel">قناة الاقتراحات</label>
+    <div id="channelsLoading" class="loading-pick">جاري تحميل القنوات...</div>
+    <div id="channelPickerInner" style="display:none">
+      <input type="text" class="search-box" id="channelSearch" placeholder="🔍 ابحث عن قناة..." oninput="filterChannels()">
+      <div class="pick-list" id="channelsList"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-success" onclick="saveSettings()" id="saveBtn">✅ إرسال</button>
+      <button class="btn btn-danger" onclick="closeModal('suggestionsModal')" id="cancelBtn">إلغاء</button>
+    </div>
+  </div>
+</div>
 
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('suggestions')" id="tabSuggestions">📝 الاقتراحات</button>
-      <button class="tab" onclick="switchTab('autoRoles')" id="tabAutoRoles">🎭 الرتب التلقائية</button>
+<!-- Modal: الرتب التلقائية -->
+<div class="modal" id="autoRolesModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('autoRolesModal')">✕</button>
+    <div class="modal-title">🎭 الرتب التلقائية</div>
+    <div class="modal-sub">اختر الرتبة التلقائية للأعضاء والبوتات</div>
+    <div id="arAlertBox"></div>
+
+    <!-- رتبة الأعضاء -->
+    <label class="input-label">👤 رتبة الأعضاء</label>
+    <div class="current-badge">
+      <div class="current-badge-dot" id="memberCurrentDot"></div>
+      <span id="memberCurrentName" class="current-badge-none">لا توجد رتبة محددة</span>
+    </div>
+    <input type="text" class="search-box" id="memberRoleSearch" placeholder="🔍 ابحث عن رتبة..." oninput="filterRoles('member')">
+    <div class="pick-list" id="memberRolesList"><div class="loading-pick">جاري التحميل...</div></div>
+    <div class="modal-actions" style="margin-bottom:6px">
+      <button class="btn btn-success" onclick="saveAutoRole('member')">✅ حفظ</button>
+      <button class="btn btn-danger" onclick="clearAutoRole('member')">🗑️ إزالة</button>
     </div>
 
-    <!-- تاب الاقتراحات -->
-    <div class="tab-content active" id="tabSuggestionsContent">
-      <div class="input-group">
-        <label id="channelLabel">قناة الاقتراحات</label>
-        <div id="channelsContainer">
-          <div class="loading-channels" id="channelsLoading">جاري تحميل القنوات...</div>
-          <div id="channelPickerWrap" style="display:none">
-            <input type="text" class="search-box" id="channelSearch" placeholder="🔍 ابحث عن قناة..." oninput="filterChannels()">
-            <div class="channels-list" id="channelsList"></div>
-          </div>
-        </div>
-      </div>
-      <div id="alertBox2"></div>
-      <div class="modal-actions">
-        <button class="btn btn-success" onclick="saveSettings()" id="saveBtn">✅ إرسال</button>
-        <button class="btn btn-danger" onclick="closeModal()" id="cancelBtn">إلغاء</button>
-      </div>
+    <hr class="divider">
+
+    <!-- رتبة البوتات -->
+    <label class="input-label">🤖 رتبة البوتات</label>
+    <div class="current-badge">
+      <div class="current-badge-dot" id="botCurrentDot"></div>
+      <span id="botCurrentName" class="current-badge-none">لا توجد رتبة محددة</span>
     </div>
-
-    <!-- تاب الرتب التلقائية -->
-    <div class="tab-content" id="tabAutoRolesContent">
-      <div id="autoRolesAlertBox"></div>
-      <div class="auto-roles-layout">
-
-        <!-- رتبة الأعضاء -->
-        <div class="auto-role-panel">
-          <div class="auto-role-panel-title">👤 رتبة الأعضاء</div>
-          <div class="current-role-badge" id="currentMemberRoleBadge">
-            <div class="current-role-dot" id="currentMemberRoleDot" style="background:#444"></div>
-            <span class="no-role-text" id="currentMemberRoleName">لا توجد رتبة محددة</span>
-          </div>
-          <input type="text" class="role-search" id="memberRoleSearch" placeholder="🔍 ابحث عن رتبة..." oninput="filterRoles('member')">
-          <div class="roles-list" id="memberRolesList">
-            <div class="loading-channels">جاري التحميل...</div>
-          </div>
-          <div class="auto-role-actions">
-            <button class="btn-sm btn-sm-success" onclick="saveAutoRole('member')">✅ حفظ</button>
-            <button class="btn-sm btn-sm-danger" onclick="clearAutoRole('member')">🗑️ إلغاء</button>
-          </div>
-        </div>
-
-        <!-- رتبة البوتات -->
-        <div class="auto-role-panel">
-          <div class="auto-role-panel-title">🤖 رتبة البوتات</div>
-          <div class="current-role-badge" id="currentBotRoleBadge">
-            <div class="current-role-dot" id="currentBotRoleDot" style="background:#444"></div>
-            <span class="no-role-text" id="currentBotRoleName">لا توجد رتبة محددة</span>
-          </div>
-          <input type="text" class="role-search" id="botRoleSearch" placeholder="🔍 ابحث عن رتبة..." oninput="filterRoles('bot')">
-          <div class="roles-list" id="botRolesList">
-            <div class="loading-channels">جاري التحميل...</div>
-          </div>
-          <div class="auto-role-actions">
-            <button class="btn-sm btn-sm-success" onclick="saveAutoRole('bot')">✅ حفظ</button>
-            <button class="btn-sm btn-sm-danger" onclick="clearAutoRole('bot')">🗑️ إلغاء</button>
-          </div>
-        </div>
-
-      </div>
+    <input type="text" class="search-box" id="botRoleSearch" placeholder="🔍 ابحث عن رتبة..." oninput="filterRoles('bot')">
+    <div class="pick-list" id="botRolesList"><div class="loading-pick">جاري التحميل...</div></div>
+    <div class="modal-actions">
+      <button class="btn btn-success" onclick="saveAutoRole('bot')">✅ حفظ</button>
+      <button class="btn btn-danger" onclick="clearAutoRole('bot')">🗑️ إزالة</button>
     </div>
 
   </div>
 </div>
 
 <script>
-const WORKER_URL = 'https://dasbord.122007aboudiii.workers.dev';
-const CLIENT_ID = '1356316450616508657';
+const WORKER_URL   = 'https://dasbord.122007aboudiii.workers.dev';
+const CLIENT_ID    = '1356316450616508657';
 const REDIRECT_URI = 'https://amoluff.github.io/flixerx-dashboard/callback';
 
 let accessToken = null;
 let currentGuildId = null;
 let currentLang = 'ar';
+
 let allChannels = [];
 let selectedChannelId = null;
 
-// ─── الرتب التلقائية ────────────────────────────────────────────────────────
 let allRoles = [];
 let selectedMemberRoleId = null;
-let selectedBotRoleId = null;
-let currentMemberRoleId = null;
-let currentBotRoleId = null;
+let selectedBotRoleId    = null;
+let currentMemberRoleId  = null;
+let currentBotRoleId     = null;
 
-const translations = {
-  ar: {
-    heroTitle: 'FlixerX Dashboard',
-    heroSub: 'سجل دخول عشان تدير سيرفراتك',
-    loginBtn: 'تسجيل الدخول بـ Discord',
-    sectionTitle: 'سيرفراتك',
-    sectionSub: 'السيرفرات المشتركة بينك وبين FlixerX',
-    noGuilds: 'ما في سيرفرات مشتركة',
-    admin: 'أدمن',
-    member: 'عضو',
-    settings: 'الإعدادات',
-    modalTitle: '⚙️ إعدادات السيرفر',
-    tabSuggestions: '📝 الاقتراحات',
-    tabAutoRoles: '🎭 الرتب التلقائية',
-    channelLabel: 'قناة الاقتراحات',
-    channelsLoading: 'جاري تحميل القنوات...',
-    saveBtn: '✅ إرسال',
-    cancelBtn: 'إلغاء',
-    logout: 'خروج',
-    saveSuccess: 'تم الحفظ بنجاح ✅',
-    saveError: 'حدث خطأ',
-    connError: 'حدث خطأ في الاتصال',
-    selectChannel: 'اختر قناة أولاً',
-    searchPlaceholder: '🔍 ابحث عن قناة...',
-    dir: 'rtl'
-  },
-  en: {
-    heroTitle: 'FlixerX Dashboard',
-    heroSub: 'Login to manage your servers',
-    loginBtn: 'Login with Discord',
-    sectionTitle: 'Your Servers',
-    sectionSub: 'Servers shared between you and FlixerX',
-    noGuilds: 'No shared servers',
-    admin: 'Admin',
-    member: 'Member',
-    settings: 'Settings',
-    modalTitle: '⚙️ Server Settings',
-    tabSuggestions: '📝 Suggestions',
-    tabAutoRoles: '🎭 Auto Roles',
-    channelLabel: 'Suggestions Channel',
-    channelsLoading: 'Loading channels...',
-    saveBtn: '✅ Save',
-    cancelBtn: 'Cancel',
-    logout: 'Logout',
-    saveSuccess: 'Saved successfully ✅',
-    saveError: 'An error occurred',
-    connError: 'Connection error',
-    selectChannel: 'Please select a channel first',
-    searchPlaceholder: '🔍 Search channels...',
-    dir: 'ltr'
-  }
+// ── i18n ──────────────────────────────────────────────────────────────────
+const T = {
+  ar: { heroTitle:'FlixerX Dashboard', heroSub:'سجل دخول عشان تدير سيرفراتك',
+        loginBtn:'تسجيل الدخول بـ Discord', sectionTitle:'سيرفراتك',
+        sectionSub:'السيرفرات المشتركة بينك وبين FlixerX', noGuilds:'ما في سيرفرات مشتركة',
+        admin:'أدمن', member:'عضو', settings:'الإعدادات', logout:'خروج',
+        saveSuccess:'تم الحفظ بنجاح ✅', saveError:'حدث خطأ', connError:'حدث خطأ في الاتصال',
+        selectChannel:'اختر قناة أولاً', backBtn:'رجوع', serverNameSub:'إعدادات السيرفر',
+        cardSugTitle:'الاقتراحات', cardSugSub:'إعداد قناة الاقتراحات',
+        cardRolesTitle:'الرتب التلقائية', cardRolesSub:'رتبة الأعضاء والبوتات',
+        channelLabel:'قناة الاقتراحات', saveBtn:'✅ إرسال', cancelBtn:'إلغاء', lang:'EN' },
+  en: { heroTitle:'FlixerX Dashboard', heroSub:'Login to manage your servers',
+        loginBtn:'Login with Discord', sectionTitle:'Your Servers',
+        sectionSub:'Servers shared between you and FlixerX', noGuilds:'No shared servers',
+        admin:'Admin', member:'Member', settings:'Settings', logout:'Logout',
+        saveSuccess:'Saved successfully ✅', saveError:'An error occurred', connError:'Connection error',
+        selectChannel:'Please select a channel first', backBtn:'Back', serverNameSub:'Server Settings',
+        cardSugTitle:'Suggestions', cardSugSub:'Set up suggestions channel',
+        cardRolesTitle:'Auto Roles', cardRolesSub:'Member & bot roles',
+        channelLabel:'Suggestions Channel', saveBtn:'✅ Save', cancelBtn:'Cancel', lang:'عر' }
 };
-
-function t(key) { return translations[currentLang][key] || key; }
+const t = k => T[currentLang][k] || k;
 
 function toggleLang() {
   currentLang = currentLang === 'ar' ? 'en' : 'ar';
   document.documentElement.lang = currentLang;
-  document.documentElement.dir = t('dir');
-  document.getElementById('langBtn').textContent = currentLang === 'ar' ? 'EN' : 'عر';
-  updateTexts();
+  document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+  document.getElementById('langBtn').textContent = t('lang');
+  ['heroTitle','heroSub','loginBtn','sectionTitle','sectionSub','backBtn','serverNameSub',
+   'cardSugTitle','cardSugSub','cardRolesTitle','cardRolesSub','channelLabel','saveBtn','cancelBtn']
+    .forEach(id => { const el=document.getElementById(id); if(el) el.textContent=t(id); });
 }
 
-function updateTexts() {
-  document.getElementById('heroTitle').textContent = t('heroTitle');
-  document.getElementById('heroSub').textContent = t('heroSub');
-  document.getElementById('loginBtn').textContent = t('loginBtn');
-  document.getElementById('sectionTitle').textContent = t('sectionTitle');
-  document.getElementById('sectionSub').textContent = t('sectionSub');
-  document.getElementById('modalTitle').textContent = t('modalTitle');
-  document.getElementById('tabSuggestions').textContent = t('tabSuggestions');
-  document.getElementById('tabAutoRoles').textContent = t('tabAutoRoles');
-  document.getElementById('channelLabel').textContent = t('channelLabel');
-  document.getElementById('saveBtn').textContent = t('saveBtn');
-  document.getElementById('cancelBtn').textContent = t('cancelBtn');
-  document.getElementById('channelSearch').placeholder = t('searchPlaceholder');
+// ── Auth ──────────────────────────────────────────────────────────────────
+function login() {
+  const p = new URLSearchParams({ client_id:CLIENT_ID, redirect_uri:REDIRECT_URI,
+    response_type:'code', scope:'identify guilds' });
+  window.location.href = `https://discord.com/oauth2/authorize?${p}`;
 }
+function logout() { localStorage.removeItem('discord_token'); location.reload(); }
 
 async function checkCallback() {
-  let search = window.location.search;
-  if (!search) search = sessionStorage.getItem('oauth_redirect') || '';
+  let search = window.location.search || sessionStorage.getItem('oauth_redirect') || '';
   sessionStorage.removeItem('oauth_redirect');
-  const params = new URLSearchParams(search);
-  const code = params.get('code');
-  if (!code) return false;
+  const code = new URLSearchParams(search).get('code');
+  if (!code) return;
   window.history.replaceState({}, '', window.location.pathname);
   try {
     const res = await fetch(`${WORKER_URL}/auth/callback`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ code })
     });
     const data = await res.json();
-    if (data.access_token) {
-      localStorage.setItem('discord_token', data.access_token);
-      accessToken = data.access_token;
-      return true;
-    }
-  } catch(e) { console.error('Auth error:', e); }
-  return false;
+    if (data.access_token) { localStorage.setItem('discord_token', data.access_token); accessToken = data.access_token; }
+  } catch(e) {}
 }
 
-function login() {
-  const params = new URLSearchParams({
-    client_id: CLIENT_ID,
-    redirect_uri: REDIRECT_URI,
-    response_type: 'code',
-    scope: 'identify guilds'
-  });
-  window.location.href = `https://discord.com/oauth2/authorize?${params}`;
-}
-
-function logout() {
-  localStorage.removeItem('discord_token');
-  location.reload();
-}
-
-function showAlert(msg, type) {
-  const box = document.getElementById('alertBox');
+// ── Alert ─────────────────────────────────────────────────────────────────
+function showAlert(boxId, msg, type) {
+  const box = document.getElementById(boxId);
+  if (!box) return;
   box.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
   setTimeout(() => box.innerHTML = '', 4000);
 }
 
-function showAutoRolesAlert(msg, type) {
-  const box = document.getElementById('autoRolesAlertBox');
-  box.innerHTML = `<div class="alert alert-${type}">${msg}</div>`;
-  setTimeout(() => box.innerHTML = '', 4000);
-}
-
+// ── Guilds ────────────────────────────────────────────────────────────────
 async function loadGuilds() {
   document.getElementById('loginSection').style.display = 'none';
   document.getElementById('dashSection').style.display = 'block';
   try {
-    const res = await fetch(`${WORKER_URL}/guilds`, {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    });
+    const res = await fetch(`${WORKER_URL}/guilds`, { headers:{ Authorization:`Bearer ${accessToken}` } });
     const data = await res.json();
     if (!data.guilds) { logout(); return; }
 
-    document.getElementById('navUser').innerHTML = `
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span style="color:#777;font-size:13px;">${data.user.username}</span>
-        <button class="btn btn-danger" onclick="logout()" style="padding:7px 14px;font-size:13px;">${t('logout')}</button>
-      </div>`;
+    document.getElementById('navUser').innerHTML =
+      `<span style="color:#777;font-size:13px">${data.user.username}</span>
+       <button class="btn btn-danger" onclick="logout()" style="padding:7px 14px;font-size:13px">${t('logout')}</button>`;
 
     const list = document.getElementById('guildsList');
-    if (data.guilds.length === 0) {
-      list.innerHTML = `<div class="loading">${t('noGuilds')}</div>`;
-      return;
-    }
+    if (!data.guilds.length) { list.innerHTML = `<div class="loading">${t('noGuilds')}</div>`; return; }
 
     list.innerHTML = data.guilds.map(g => {
       const icon = g.icon
         ? `<img src="https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png" alt="">`
         : g.name.charAt(0);
-      return `
-        <div class="guild-card">
-          <div class="guild-icon">${icon}</div>
-          <div class="guild-name">${g.name}</div>
-          ${g.isAdmin
-            ? `<span class="badge">${t('admin')}</span>
-               <button class="btn btn-primary" style="width:100%;margin-top:4px;font-size:13px;" onclick="openModal('${g.id}','${g.name.replace(/'/g,"\\'")}')">⚙️ ${t('settings')}</button>`
-            : `<span class="badge badge-member">${t('member')}</span>`}
-        </div>`;
+      return `<div class="guild-card">
+        <div class="guild-icon">${icon}</div>
+        <div class="guild-name">${g.name}</div>
+        ${g.isAdmin
+          ? `<span class="badge">${t('admin')}</span>
+             <button class="btn btn-primary" style="width:100%;margin-top:4px;font-size:13px"
+               onclick='openServerPage(${JSON.stringify(g)})'>⚙️ ${t('settings')}</button>`
+          : `<span class="badge badge-member">${t('member')}</span>`}
+      </div>`;
     }).join('');
+  } catch(e) { showAlert('alertBox', t('connError'), 'error'); }
+}
 
-  } catch(e) {
-    showAlert(t('connError'), 'error');
-  }
+// ── Server Page ───────────────────────────────────────────────────────────
+function openServerPage(guild) {
+  currentGuildId = guild.id;
+  document.getElementById('dashSection').style.display = 'none';
+  document.getElementById('serverSection').style.display = 'block';
+  document.getElementById('serverNameTitle').textContent = guild.name;
+  const iconEl = document.getElementById('serverIconLg');
+  iconEl.innerHTML = guild.icon
+    ? `<img src="https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png" alt="">`
+    : guild.name.charAt(0);
+}
+
+function backToGuilds() {
+  document.getElementById('serverSection').style.display = 'none';
+  document.getElementById('dashSection').style.display = 'block';
+  currentGuildId = null;
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.modal').forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
+  });
+});
+
+// ── Suggestions Modal ─────────────────────────────────────────────────────
+async function openSuggestionsModal() {
+  selectedChannelId = null;
+  allChannels = [];
+  document.getElementById('channelPickerInner').style.display = 'none';
+  document.getElementById('channelsLoading').style.display = 'block';
+  document.getElementById('channelsLoading').textContent = 'جاري تحميل القنوات...';
+  document.getElementById('channelSearch').value = '';
+  document.getElementById('suggestionsModal').classList.add('active');
+  try {
+    const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/channels`,
+      { headers:{ Authorization:`Bearer ${accessToken}` } });
+    const data = await res.json();
+    if (data.channels && data.channels.length) {
+      allChannels = data.channels;
+      document.getElementById('channelsLoading').style.display = 'none';
+      document.getElementById('channelPickerInner').style.display = 'block';
+      renderChannels(allChannels);
+    } else {
+      document.getElementById('channelsLoading').textContent = 'ما في قنوات';
+    }
+  } catch(e) { document.getElementById('channelsLoading').textContent = t('connError'); }
 }
 
 function filterChannels() {
   const q = document.getElementById('channelSearch').value.toLowerCase();
-  const filtered = allChannels.filter(c => c.name.toLowerCase().includes(q));
-  renderChannels(filtered);
+  renderChannels(allChannels.filter(c => c.name.toLowerCase().includes(q)));
+}
+function renderChannels(list) {
+  const el = document.getElementById('channelsList');
+  if (!list.length) { el.innerHTML = '<div class="loading-pick">ما في نتائج</div>'; return; }
+  el.innerHTML = list.map(c =>
+    `<div class="pick-item ${selectedChannelId===c.id?'selected':''}" onclick="selectChannel('${c.id}')">
+      <span class="pick-icon">#</span>${c.name}
+    </div>`).join('');
+}
+function selectChannel(id) { selectedChannelId = id; filterChannels(); }
+
+async function saveSettings() {
+  if (!selectedChannelId) { showAlert('sugAlertBox', t('selectChannel'), 'error'); return; }
+  try {
+    const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/settings`, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${accessToken}` },
+      body: JSON.stringify({ channel_id: selectedChannelId })
+    });
+    const data = await res.json();
+    if (data.success) { showAlert('sugAlertBox', t('saveSuccess'), 'success'); setTimeout(()=>closeModal('suggestionsModal'),1200); }
+    else showAlert('sugAlertBox', `${t('saveError')}: ${data.error}`, 'error');
+  } catch(e) { showAlert('sugAlertBox', t('connError'), 'error'); }
 }
 
-function renderChannels(channels) {
-  const list = document.getElementById('channelsList');
-  if (channels.length === 0) {
-    list.innerHTML = `<div class="loading-channels" style="padding:12px">ما في نتائج</div>`;
-    return;
-  }
-  list.innerHTML = channels.map(ch => `
-    <div class="channel-item ${selectedChannelId === ch.id ? 'selected' : ''}" onclick="selectChannel('${ch.id}', '${ch.name.replace(/'/g,"\\'")}')">
-      <span class="ch-icon">#</span> ${ch.name}
-    </div>
-  `).join('');
-}
-
-function selectChannel(id, name) {
-  selectedChannelId = id;
-  renderChannels(allChannels.filter(c => c.name.toLowerCase().includes(
-    document.getElementById('channelSearch').value.toLowerCase()
-  )));
-}
-
-async function openModal(guildId, guildName) {
-  currentGuildId = guildId;
-  selectedChannelId = null;
-  allChannels = [];
+// ── Auto Roles Modal ──────────────────────────────────────────────────────
+async function openAutoRolesModal() {
   allRoles = [];
-  selectedMemberRoleId = null;
-  selectedBotRoleId = null;
-
-  document.getElementById('modalGuildName').textContent = guildName;
-  document.getElementById('channelPickerWrap').style.display = 'none';
-  document.getElementById('channelsLoading').style.display = 'block';
-  document.getElementById('channelsLoading').textContent = t('channelsLoading');
-  document.getElementById('channelSearch').value = '';
+  selectedMemberRoleId = selectedBotRoleId = currentMemberRoleId = currentBotRoleId = null;
+  document.getElementById('memberRolesList').innerHTML = '<div class="loading-pick">جاري التحميل...</div>';
+  document.getElementById('botRolesList').innerHTML    = '<div class="loading-pick">جاري التحميل...</div>';
   document.getElementById('memberRoleSearch').value = '';
-  document.getElementById('botRoleSearch').value = '';
-  document.getElementById('memberRolesList').innerHTML = '<div class="loading-channels">جاري التحميل...</div>';
-  document.getElementById('botRolesList').innerHTML = '<div class="loading-channels">جاري التحميل...</div>';
-  document.getElementById('settingsModal').classList.add('active');
+  document.getElementById('botRoleSearch').value    = '';
+  document.getElementById('autoRolesModal').classList.add('active');
 
-  // تحميل القنوات والرتب معاً
-  const [channelsRes, rolesRes, autoRolesRes] = await Promise.allSettled([
-    fetch(`${WORKER_URL}/guild/${guildId}/channels`, { headers: { Authorization: `Bearer ${accessToken}` } }),
-    fetch(`${WORKER_URL}/guild/${guildId}/roles`, { headers: { Authorization: `Bearer ${accessToken}` } }),
-    fetch(`${WORKER_URL}/guild/${guildId}/auto-roles`, { headers: { Authorization: `Bearer ${accessToken}` } })
+  const [rolesRes, autoRes] = await Promise.allSettled([
+    fetch(`${WORKER_URL}/guild/${currentGuildId}/roles`,      { headers:{ Authorization:`Bearer ${accessToken}` } }),
+    fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-roles`, { headers:{ Authorization:`Bearer ${accessToken}` } })
   ]);
 
-  // معالجة القنوات
-  try {
-    const data = await channelsRes.value.json();
-    if (data.channels && data.channels.length > 0) {
-      allChannels = data.channels;
-      renderChannels(allChannels);
-      document.getElementById('channelsLoading').style.display = 'none';
-      document.getElementById('channelPickerWrap').style.display = 'block';
-    } else {
-      document.getElementById('channelsLoading').textContent = 'ما في قنوات';
-    }
-  } catch(e) {
-    document.getElementById('channelsLoading').textContent = t('connError');
-  }
+  try { const d = await autoRes.value.json(); currentMemberRoleId=d.member_role_id||null; currentBotRoleId=d.bot_role_id||null; } catch(e) {}
 
-  // معالجة الرتب الحالية
   try {
-    const autoData = await autoRolesRes.value.json();
-    currentMemberRoleId = autoData.member_role_id || null;
-    currentBotRoleId = autoData.bot_role_id || null;
-  } catch(e) {
-    currentMemberRoleId = null;
-    currentBotRoleId = null;
-  }
-
-  // معالجة قائمة الرتب
-  try {
-    const rolesData = await rolesRes.value.json();
-    if (rolesData.roles && rolesData.roles.length > 0) {
-      allRoles = rolesData.roles;
-      updateCurrentRoleDisplay('member');
-      updateCurrentRoleDisplay('bot');
+    const d = await rolesRes.value.json();
+    if (d.roles && d.roles.length) {
+      allRoles = d.roles;
+      updateCurrentBadge('member');
+      updateCurrentBadge('bot');
       renderRoles('member', allRoles);
       renderRoles('bot', allRoles);
     } else {
-      document.getElementById('memberRolesList').innerHTML = '<div class="loading-channels">ما في رتب</div>';
-      document.getElementById('botRolesList').innerHTML = '<div class="loading-channels">ما في رتب</div>';
+      document.getElementById('memberRolesList').innerHTML = '<div class="loading-pick">ما في رتب</div>';
+      document.getElementById('botRolesList').innerHTML    = '<div class="loading-pick">ما في رتب</div>';
     }
   } catch(e) {
-    document.getElementById('memberRolesList').innerHTML = '<div class="loading-channels">حدث خطأ</div>';
-    document.getElementById('botRolesList').innerHTML = '<div class="loading-channels">حدث خطأ</div>';
+    document.getElementById('memberRolesList').innerHTML = '<div class="loading-pick">حدث خطأ</div>';
+    document.getElementById('botRolesList').innerHTML    = '<div class="loading-pick">حدث خطأ</div>';
   }
 }
 
-function roleColor(color) {
-  if (!color || color === 0) return '#444';
-  return '#' + color.toString(16).padStart(6, '0');
-}
+function roleColor(c) { return (!c||c===0)?'#444':'#'+c.toString(16).padStart(6,'0'); }
 
-function updateCurrentRoleDisplay(type) {
-  const currentId = type === 'member' ? currentMemberRoleId : currentBotRoleId;
-  const dotEl = document.getElementById(type === 'member' ? 'currentMemberRoleDot' : 'currentBotRoleDot');
-  const nameEl = document.getElementById(type === 'member' ? 'currentMemberRoleName' : 'currentBotRoleName');
-  if (currentId) {
-    const role = allRoles.find(r => r.id === currentId);
-    if (role) {
-      dotEl.style.background = roleColor(role.color);
-      nameEl.textContent = role.name;
-      nameEl.className = 'current-role-name';
-    }
-  } else {
-    dotEl.style.background = '#444';
-    nameEl.textContent = type === 'member' ? 'لا توجد رتبة محددة' : 'لا توجد رتبة محددة';
-    nameEl.className = 'no-role-text';
-  }
+function updateCurrentBadge(type) {
+  const id   = type==='member' ? currentMemberRoleId : currentBotRoleId;
+  const dot  = document.getElementById(type==='member'?'memberCurrentDot':'botCurrentDot');
+  const name = document.getElementById(type==='member'?'memberCurrentName':'botCurrentName');
+  const role = id ? allRoles.find(r=>r.id===id) : null;
+  if (role) { dot.style.background=roleColor(role.color); name.textContent=role.name; name.className='current-badge-name'; }
+  else { dot.style.background='#444'; name.textContent='لا توجد رتبة محددة'; name.className='current-badge-none'; }
 }
 
 function filterRoles(type) {
-  const searchId = type === 'member' ? 'memberRoleSearch' : 'botRoleSearch';
-  const q = document.getElementById(searchId).value.toLowerCase();
-  const filtered = allRoles.filter(r => r.name.toLowerCase().includes(q));
-  renderRoles(type, filtered);
+  const q = document.getElementById(type==='member'?'memberRoleSearch':'botRoleSearch').value.toLowerCase();
+  renderRoles(type, allRoles.filter(r=>r.name.toLowerCase().includes(q)));
 }
-
 function renderRoles(type, roles) {
-  const listId = type === 'member' ? 'memberRolesList' : 'botRolesList';
-  const selectedId = type === 'member' ? selectedMemberRoleId : selectedBotRoleId;
-  const list = document.getElementById(listId);
-  if (roles.length === 0) {
-    list.innerHTML = '<div class="loading-channels" style="padding:10px">ما في نتائج</div>';
-    return;
-  }
-  list.innerHTML = roles.map(r => `
-    <div class="role-item ${selectedId === r.id ? 'selected' : ''}" onclick="selectRole('${type}','${r.id}')">
-      <div class="role-dot" style="background:${roleColor(r.color)}"></div>
-      ${r.name}
-    </div>
-  `).join('');
+  const selId = type==='member' ? selectedMemberRoleId : selectedBotRoleId;
+  const el = document.getElementById(type==='member'?'memberRolesList':'botRolesList');
+  if (!roles.length) { el.innerHTML='<div class="loading-pick">ما في نتائج</div>'; return; }
+  el.innerHTML = roles.map(r =>
+    `<div class="pick-item ${selId===r.id?'selected':''}" onclick="selectRole('${type}','${r.id}')">
+      <div class="role-dot" style="background:${roleColor(r.color)}"></div>${r.name}
+    </div>`).join('');
 }
-
 function selectRole(type, id) {
-  if (type === 'member') {
-    selectedMemberRoleId = id;
-    renderRoles('member', allRoles.filter(r => r.name.toLowerCase().includes(
-      document.getElementById('memberRoleSearch').value.toLowerCase()
-    )));
-  } else {
-    selectedBotRoleId = id;
-    renderRoles('bot', allRoles.filter(r => r.name.toLowerCase().includes(
-      document.getElementById('botRoleSearch').value.toLowerCase()
-    )));
-  }
+  if (type==='member') selectedMemberRoleId=id; else selectedBotRoleId=id;
+  filterRoles(type);
 }
 
 async function saveAutoRole(type) {
-  const selectedId = type === 'member' ? selectedMemberRoleId : selectedBotRoleId;
-  if (!selectedId) {
-    showAutoRolesAlert(type === 'member' ? 'اختر رتبة للأعضاء أولاً' : 'اختر رتبة للبوتات أولاً', 'error');
-    return;
-  }
+  const selId = type==='member' ? selectedMemberRoleId : selectedBotRoleId;
+  if (!selId) { showAlert('arAlertBox', type==='member'?'اختر رتبة للأعضاء أولاً':'اختر رتبة للبوتات أولاً','error'); return; }
   try {
-    const body = {
-      member_role_id: type === 'member' ? selectedId : currentMemberRoleId,
-      bot_role_id: type === 'bot' ? selectedId : currentBotRoleId
-    };
+    const body = { member_role_id: type==='member'?selId:currentMemberRoleId, bot_role_id: type==='bot'?selId:currentBotRoleId };
     const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-roles`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+      method:'POST', headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${accessToken}` },
       body: JSON.stringify(body)
     });
     const data = await res.json();
     if (data.success) {
-      if (type === 'member') currentMemberRoleId = selectedId;
-      else currentBotRoleId = selectedId;
-      updateCurrentRoleDisplay(type);
-      showAutoRolesAlert('تم الحفظ بنجاح ✅', 'success');
-    } else {
-      showAutoRolesAlert(`${t('saveError')}: ${data.error}`, 'error');
-    }
-  } catch(e) {
-    showAutoRolesAlert(t('connError'), 'error');
-  }
+      if (type==='member') currentMemberRoleId=selId; else currentBotRoleId=selId;
+      updateCurrentBadge(type);
+      showAlert('arAlertBox', t('saveSuccess'), 'success');
+    } else showAlert('arAlertBox', `${t('saveError')}: ${data.error}`, 'error');
+  } catch(e) { showAlert('arAlertBox', t('connError'), 'error'); }
 }
 
 async function clearAutoRole(type) {
   try {
-    const body = {
-      member_role_id: type === 'member' ? null : currentMemberRoleId,
-      bot_role_id: type === 'bot' ? null : currentBotRoleId
-    };
+    const body = { member_role_id: type==='member'?null:currentMemberRoleId, bot_role_id: type==='bot'?null:currentBotRoleId };
     const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-roles`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
+      method:'POST', headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${accessToken}` },
       body: JSON.stringify(body)
     });
     const data = await res.json();
     if (data.success) {
-      if (type === 'member') { currentMemberRoleId = null; selectedMemberRoleId = null; }
-      else { currentBotRoleId = null; selectedBotRoleId = null; }
-      updateCurrentRoleDisplay(type);
+      if (type==='member') { currentMemberRoleId=null; selectedMemberRoleId=null; }
+      else { currentBotRoleId=null; selectedBotRoleId=null; }
+      updateCurrentBadge(type);
       renderRoles(type, allRoles);
-      showAutoRolesAlert('تم الإلغاء بنجاح ✅', 'success');
-    } else {
-      showAutoRolesAlert(`${t('saveError')}: ${data.error}`, 'error');
-    }
-  } catch(e) {
-    showAutoRolesAlert(t('connError'), 'error');
-  }
+      showAlert('arAlertBox','تم الإزالة بنجاح ✅','success');
+    } else showAlert('arAlertBox', `${t('saveError')}: ${data.error}`, 'error');
+  } catch(e) { showAlert('arAlertBox', t('connError'), 'error'); }
 }
 
-function closeModal() {
-  document.getElementById('settingsModal').classList.remove('active');
-  currentGuildId = null;
-  selectedChannelId = null;
-  selectedMemberRoleId = null;
-  selectedBotRoleId = null;
-  switchTab('suggestions');
-}
-
-function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  const key = tab.charAt(0).toUpperCase() + tab.slice(1);
-  document.getElementById(`tab${key}`).classList.add('active');
-  document.getElementById(`tab${key}Content`).classList.add('active');
-}
-
-async function saveSettings() {
-  if (!selectedChannelId) { showAlert(t('selectChannel'), 'error'); return; }
-  try {
-    const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/settings`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`
-      },
-      body: JSON.stringify({ channel_id: selectedChannelId })
-    });
-    const data = await res.json();
-    if (data.success) {
-      showAlert(t('saveSuccess'), 'success');
-      closeModal();
-    } else {
-      showAlert(`${t('saveError')}: ${data.error}`, 'error');
-    }
-  } catch(e) {
-    showAlert(t('connError'), 'error');
-  }
-}
-
+// ── Init ──────────────────────────────────────────────────────────────────
 (async () => {
   await checkCallback();
   accessToken = localStorage.getItem('discord_token');
