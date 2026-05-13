@@ -2,7 +2,8 @@
 <html>
 <head>
 <script>
-  window.location.href = '/flixerx-dashboard/' + window.location.search;
+  sessionStorage.setItem('oauth_redirect', window.location.search);
+  window.location.replace('https://amoluff.github.io/flixerx-dashboard/?redirect=1' + window.location.search.replace('?','&'));
 </script>
 </head>
 </html>
