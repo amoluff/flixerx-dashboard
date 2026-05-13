@@ -84,7 +84,7 @@ body { background: #0d0d1a; color: #fff; font-family: 'Segoe UI', sans-serif; mi
 </div>
 
 <script>
-const WORKER_URL = 'https://calm-meadow-991a.122007aboudiii.workers.dev';
+const WORKER_URL = 'https://dasbord.122007aboudiii.workers.dev';
 const CLIENT_ID = '1356316450616508657';
 const REDIRECT_URI = 'https://amoluff.github.io/flixerx-dashboard/callback';
 
@@ -92,10 +92,7 @@ let accessToken = null;
 let currentGuildId = null;
 
 async function checkCallback() {
-  // قراءة الـ code من URL مباشرة أو من sessionStorage
   let search = window.location.search;
-  
-  // لو جاي من 404.html redirect
   if (!search) {
     search = sessionStorage.getItem('oauth_redirect') || '';
   }
