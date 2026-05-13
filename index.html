@@ -6,79 +6,350 @@
 <title>FlixerX Dashboard</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #0d0d1a; color: #fff; font-family: 'Segoe UI', sans-serif; min-height: 100vh; }
-.navbar { background: #12122a; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #7c3aed33; }
-.logo { font-size: 22px; font-weight: bold; color: #a855f7; }
-.btn { padding: 10px 24px; border-radius: 10px; border: none; cursor: pointer; font-size: 15px; font-weight: bold; transition: 0.2s; }
-.btn-primary { background: #7c3aed; color: #fff; }
-.btn-primary:hover { background: #a855f7; }
-.btn-danger { background: #3d1a1a; color: #f87171; border: 1px solid #f8717133; }
+
+body {
+  background: #0a0a14;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* خلفية متحركة */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 20% 50%, #7c3aed11 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 20%, #a855f711 0%, transparent 50%);
+  animation: bgMove 8s ease-in-out infinite alternate;
+  z-index: 0;
+  pointer-events: none;
+}
+@keyframes bgMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(30px, 20px); }
+}
+
+.navbar {
+  background: #0d0d1ecc;
+  backdrop-filter: blur(12px);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #7c3aed33;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #a855f7;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.lang-btn {
+  background: #1a1a2e;
+  border: 1px solid #7c3aed44;
+  color: #a855f7;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+.lang-btn:hover { background: #7c3aed22; }
+
+.btn {
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: #fff;
+  box-shadow: 0 4px 15px #7c3aed44;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px #7c3aed66;
+}
+.btn-danger {
+  background: #1a0a0a;
+  color: #f87171;
+  border: 1px solid #f8717133;
+}
 .btn-danger:hover { background: #f87171; color: #fff; }
-.container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-.hero { text-align: center; padding: 60px 0 40px; }
-.hero h1 { font-size: 36px; color: #a855f7; margin-bottom: 12px; }
-.hero p { color: #888; font-size: 16px; }
-.guilds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 32px; }
-.guild-card { background: #12122a; border: 1px solid #7c3aed33; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 12px; transition: 0.2s; }
-.guild-card:hover { border-color: #7c3aed; transform: translateY(-2px); }
-.guild-icon { width: 64px; height: 64px; border-radius: 50%; background: #7c3aed33; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: #a855f7; overflow: hidden; }
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* صفحة تسجيل الدخول */
+#loginSection {
+  text-align: center;
+  padding: 100px 20px;
+  animation: fadeIn 0.6s ease;
+}
+.hero h1 {
+  font-size: 42px;
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 14px;
+}
+.hero p { color: #888; font-size: 16px; margin-bottom: 32px; }
+
+/* كروت السيرفرات */
+#dashSection { animation: fadeIn 0.5s ease; padding: 32px 0; }
+.section-title { color: #a855f7; font-size: 22px; margin-bottom: 6px; }
+.section-sub { color: #555; font-size: 14px; margin-bottom: 28px; }
+
+.guilds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+.guild-card {
+  background: #0f0f1e;
+  border: 1px solid #7c3aed22;
+  border-radius: 16px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: 0.25s;
+  animation: fadeUp 0.4s ease both;
+  cursor: default;
+}
+.guild-card:hover {
+  border-color: #7c3aed88;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px #7c3aed22;
+}
+.guild-icon {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #7c3aed22;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #a855f7;
+  overflow: hidden;
+  border: 2px solid #7c3aed33;
+}
 .guild-icon img { width: 100%; height: 100%; object-fit: cover; }
-.guild-name { font-size: 16px; font-weight: bold; text-align: center; }
-.badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #7c3aed33; color: #a855f7; }
-.modal { display: none; position: fixed; inset: 0; background: #000000aa; z-index: 100; align-items: center; justify-content: center; }
-.modal.active { display: flex; }
-.modal-box { background: #12122a; border: 1px solid #7c3aed55; border-radius: 20px; padding: 32px; width: 90%; max-width: 460px; }
-.modal-box h2 { color: #a855f7; margin-bottom: 20px; font-size: 20px; }
+.guild-name {
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  color: #eee;
+}
+.badge {
+  font-size: 11px;
+  padding: 3px 12px;
+  border-radius: 20px;
+  background: #7c3aed22;
+  color: #a855f7;
+  border: 1px solid #7c3aed33;
+}
+.badge-member {
+  background: #1a1a2e;
+  color: #444;
+  border-color: #333;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000000bb;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal.active { display: flex; animation: fadeIn 0.2s ease; }
+.modal-box {
+  background: #0f0f1e;
+  border: 1px solid #7c3aed55;
+  border-radius: 20px;
+  padding: 28px;
+  width: 92%;
+  max-width: 480px;
+  animation: slideUp 0.3s ease;
+}
+.modal-box h2 { color: #a855f7; margin-bottom: 6px; font-size: 18px; }
+.modal-guild-name { color: #666; font-size: 13px; margin-bottom: 20px; }
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #7c3aed22;
+  padding-bottom: 12px;
+}
+.tab {
+  padding: 7px 16px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 13px;
+  color: #666;
+  background: none;
+  transition: 0.2s;
+}
+.tab.active {
+  background: #7c3aed22;
+  color: #a855f7;
+  border-color: #7c3aed44;
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+
 .input-group { margin-bottom: 16px; }
-.input-group label { display: block; margin-bottom: 6px; color: #aaa; font-size: 14px; }
-.input-group input { width: 100%; padding: 12px 16px; background: #0d0d1a; border: 1px solid #7c3aed44; border-radius: 10px; color: #fff; font-size: 15px; outline: none; }
-.input-group input:focus { border-color: #a855f7; }
-.modal-actions { display: flex; gap: 12px; margin-top: 20px; }
-.loading { text-align: center; padding: 60px; color: #666; }
-.alert { padding: 12px 20px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; }
-.alert-success { background: #1a3a1a; color: #4ade80; border: 1px solid #4ade8033; }
-.alert-error { background: #3a1a1a; color: #f87171; border: 1px solid #f8717133; }
-#loginSection { text-align: center; padding: 80px 20px; }
-#loginSection p { color: #888; margin-bottom: 24px; font-size: 16px; }
+.input-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #888;
+  font-size: 13px;
+}
+.select-channel {
+  width: 100%;
+  padding: 11px 14px;
+  background: #0a0a14;
+  border: 1px solid #7c3aed44;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23a855f7' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 12px center;
+  padding-left: 32px;
+}
+.select-channel:focus { border-color: #a855f7; }
+.select-channel option { background: #0f0f1e; }
+
+.loading-channels {
+  text-align: center;
+  padding: 20px;
+  color: #555;
+  font-size: 13px;
+}
+
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+/* Alerts */
+.alert {
+  padding: 11px 18px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  animation: fadeIn 0.3s ease;
+}
+.alert-success { background: #0a2a0a; color: #4ade80; border: 1px solid #4ade8033; }
+.alert-error { background: #2a0a0a; color: #f87171; border: 1px solid #f8717133; }
+
+.loading { text-align: center; padding: 60px; color: #444; }
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 28px; }
+  .navbar { padding: 12px 16px; }
+  .guilds-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .guild-card { padding: 16px 12px; }
+}
 </style>
 </head>
 <body>
 
 <div class="navbar">
   <div class="logo">⚡ FlixerX</div>
-  <div id="navUser"></div>
+  <div class="nav-right">
+    <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
+    <div id="navUser"></div>
+  </div>
 </div>
 
 <div class="container">
+
   <div id="loginSection">
     <div class="hero">
-      <h1>FlixerX Dashboard</h1>
-      <p>سجل دخول عشان تدير سيرفراتك</p>
+      <h1 id="heroTitle">FlixerX Dashboard</h1>
+      <p id="heroSub">سجل دخول عشان تدير سيرفراتك</p>
     </div>
-    <button class="btn btn-primary" onclick="login()">تسجيل الدخول بـ Discord</button>
+    <button class="btn btn-primary" onclick="login()" id="loginBtn">تسجيل الدخول بـ Discord</button>
   </div>
 
   <div id="dashSection" style="display:none">
     <div id="alertBox"></div>
-    <h2 style="color:#a855f7; margin-bottom:8px;">سيرفراتك</h2>
-    <p style="color:#666; margin-bottom:24px; font-size:14px;">السيرفرات المشتركة بينك وبين FlixerX</p>
+    <h2 class="section-title" id="sectionTitle">سيرفراتك</h2>
+    <p class="section-sub" id="sectionSub">السيرفرات المشتركة بينك وبين FlixerX</p>
     <div id="guildsList" class="guilds-grid">
-      <div class="loading">جاري التحميل...</div>
+      <div class="loading" id="loadingText">جاري التحميل...</div>
     </div>
   </div>
+
 </div>
 
+<!-- Modal -->
 <div class="modal" id="settingsModal">
   <div class="modal-box">
-    <h2>⚙️ إعدادات الاقتراحات</h2>
-    <p style="color:#888; font-size:13px; margin-bottom:20px;" id="modalGuildName"></p>
-    <div class="input-group">
-      <label>ID قناة الاقتراحات</label>
-      <input type="text" id="channelInput" placeholder="مثال: 123456789012345678">
+    <h2 id="modalTitle">⚙️ إعدادات السيرفر</h2>
+    <p class="modal-guild-name" id="modalGuildName"></p>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('suggestions')" id="tabSuggestions">📝 الاقتراحات</button>
     </div>
+
+    <div class="tab-content active" id="tabSuggestionsContent">
+      <div class="input-group">
+        <label id="channelLabel">قناة الاقتراحات</label>
+        <div id="channelsContainer">
+          <div class="loading-channels" id="channelsLoading">جاري تحميل القنوات...</div>
+          <select class="select-channel" id="channelSelect" style="display:none">
+            <option value="" id="selectPlaceholder">اختر قناة...</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
     <div class="modal-actions">
-      <button class="btn btn-primary" onclick="saveSettings()">💾 حفظ</button>
-      <button class="btn btn-danger" onclick="closeModal()">إلغاء</button>
+      <button class="btn btn-primary" onclick="saveSettings()" id="saveBtn">💾 حفظ</button>
+      <button class="btn btn-danger" onclick="closeModal()" id="cancelBtn">إلغاء</button>
     </div>
   </div>
 </div>
@@ -90,20 +361,99 @@ const REDIRECT_URI = 'https://amoluff.github.io/flixerx-dashboard/callback';
 
 let accessToken = null;
 let currentGuildId = null;
+let currentLang = 'ar';
+
+const translations = {
+  ar: {
+    heroTitle: 'FlixerX Dashboard',
+    heroSub: 'سجل دخول عشان تدير سيرفراتك',
+    loginBtn: 'تسجيل الدخول بـ Discord',
+    sectionTitle: 'سيرفراتك',
+    sectionSub: 'السيرفرات المشتركة بينك وبين FlixerX',
+    loading: 'جاري التحميل...',
+    noGuilds: 'ما في سيرفرات مشتركة',
+    admin: 'أدمن',
+    member: 'عضو',
+    settings: '⚙️ الإعدادات',
+    modalTitle: '⚙️ إعدادات السيرفر',
+    tabSuggestions: '📝 الاقتراحات',
+    channelLabel: 'قناة الاقتراحات',
+    channelsLoading: 'جاري تحميل القنوات...',
+    selectPlaceholder: 'اختر قناة...',
+    saveBtn: '💾 حفظ',
+    cancelBtn: 'إلغاء',
+    logout: 'خروج',
+    saveSuccess: 'تم الحفظ بنجاح ✅',
+    saveError: 'حدث خطأ',
+    connError: 'حدث خطأ في الاتصال',
+    selectChannel: 'اختر قناة أولاً',
+    dir: 'rtl'
+  },
+  en: {
+    heroTitle: 'FlixerX Dashboard',
+    heroSub: 'Login to manage your servers',
+    loginBtn: 'Login with Discord',
+    sectionTitle: 'Your Servers',
+    sectionSub: 'Servers shared between you and FlixerX',
+    loading: 'Loading...',
+    noGuilds: 'No shared servers',
+    admin: 'Admin',
+    member: 'Member',
+    settings: '⚙️ Settings',
+    modalTitle: '⚙️ Server Settings',
+    tabSuggestions: '📝 Suggestions',
+    channelLabel: 'Suggestions Channel',
+    channelsLoading: 'Loading channels...',
+    selectPlaceholder: 'Select a channel...',
+    saveBtn: '💾 Save',
+    cancelBtn: 'Cancel',
+    logout: 'Logout',
+    saveSuccess: 'Saved successfully ✅',
+    saveError: 'An error occurred',
+    connError: 'Connection error',
+    selectChannel: 'Please select a channel first',
+    dir: 'ltr'
+  }
+};
+
+function t(key) { return translations[currentLang][key] || key; }
+
+function toggleLang() {
+  currentLang = currentLang === 'ar' ? 'en' : 'ar';
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = t('dir');
+  document.getElementById('langBtn').textContent = currentLang === 'ar' ? 'EN' : 'عر';
+  updateTexts();
+}
+
+function updateTexts() {
+  const ids = ['heroTitle','heroSub','loginBtn','sectionTitle','sectionSub',
+                'loadingText','modalTitle','tabSuggestions','channelLabel',
+                'channelsLoading','selectPlaceholder','saveBtn','cancelBtn'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = t(id.replace('Text','').replace('Btn','Btn'));
+  });
+  document.getElementById('heroTitle').textContent = t('heroTitle');
+  document.getElementById('heroSub').textContent = t('heroSub');
+  document.getElementById('loginBtn').textContent = t('loginBtn');
+  document.getElementById('sectionTitle').textContent = t('sectionTitle');
+  document.getElementById('sectionSub').textContent = t('sectionSub');
+  document.getElementById('modalTitle').textContent = t('modalTitle');
+  document.getElementById('tabSuggestions').textContent = t('tabSuggestions');
+  document.getElementById('channelLabel').textContent = t('channelLabel');
+  document.getElementById('saveBtn').textContent = t('saveBtn');
+  document.getElementById('cancelBtn').textContent = t('cancelBtn');
+}
 
 async function checkCallback() {
   let search = window.location.search;
-  if (!search) {
-    search = sessionStorage.getItem('oauth_redirect') || '';
-  }
+  if (!search) search = sessionStorage.getItem('oauth_redirect') || '';
   sessionStorage.removeItem('oauth_redirect');
-
   const params = new URLSearchParams(search);
   const code = params.get('code');
   if (!code) return false;
-
   window.history.replaceState({}, '', window.location.pathname);
-
   try {
     const res = await fetch(`${WORKER_URL}/auth/callback`, {
       method: 'POST',
@@ -116,9 +466,7 @@ async function checkCallback() {
       accessToken = data.access_token;
       return true;
     }
-  } catch(e) {
-    console.error('Auth error:', e);
-  }
+  } catch(e) { console.error('Auth error:', e); }
   return false;
 }
 
@@ -154,41 +502,68 @@ async function loadGuilds() {
     if (!data.guilds) { logout(); return; }
 
     document.getElementById('navUser').innerHTML = `
-      <div style="display:flex;align-items:center;gap:12px;">
-        <span style="color:#aaa;font-size:14px;">${data.user.username}</span>
-        <button class="btn btn-danger" onclick="logout()">خروج</button>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="color:#777;font-size:13px;">${data.user.username}</span>
+        <button class="btn btn-danger" onclick="logout()" style="padding:7px 14px;font-size:13px;">${t('logout')}</button>
       </div>`;
 
     const list = document.getElementById('guildsList');
     if (data.guilds.length === 0) {
-      list.innerHTML = '<div class="loading">ما في سيرفرات مشتركة</div>';
+      list.innerHTML = `<div class="loading">${t('noGuilds')}</div>`;
       return;
     }
 
-    list.innerHTML = data.guilds.map(g => {
+    list.innerHTML = data.guilds.map((g, i) => {
       const icon = g.icon
         ? `<img src="https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png" alt="">`
         : g.name.charAt(0);
       return `
-        <div class="guild-card">
+        <div class="guild-card" style="animation-delay:${i * 0.05}s">
           <div class="guild-icon">${icon}</div>
           <div class="guild-name">${g.name}</div>
           ${g.isAdmin
-            ? `<span class="badge">أدمن</span><button class="btn btn-primary" style="width:100%;margin-top:4px;" onclick="openModal('${g.id}','${g.name.replace(/'/g,"\\'")}')">⚙️ الإعدادات</button>`
-            : `<span class="badge" style="color:#666;background:#1a1a2e;">عضو</span>`}
+            ? `<span class="badge">${t('admin')}</span>
+               <button class="btn btn-primary" style="width:100%;margin-top:4px;font-size:13px;" onclick="openModal('${g.id}','${g.name.replace(/'/g,"\\'")}')">⚙️ ${t('settings')}</button>`
+            : `<span class="badge badge-member">${t('member')}</span>`}
         </div>`;
     }).join('');
 
   } catch(e) {
-    showAlert('حدث خطأ في تحميل السيرفرات', 'error');
+    showAlert(t('connError'), 'error');
   }
 }
 
 async function openModal(guildId, guildName) {
   currentGuildId = guildId;
   document.getElementById('modalGuildName').textContent = guildName;
-  document.getElementById('channelInput').value = '';
+  document.getElementById('channelSelect').style.display = 'none';
+  document.getElementById('channelsLoading').style.display = 'block';
+  document.getElementById('channelsLoading').textContent = t('channelsLoading');
   document.getElementById('settingsModal').classList.add('active');
+
+  try {
+    const res = await fetch(`${WORKER_URL}/guild/${guildId}/channels`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    const data = await res.json();
+
+    const select = document.getElementById('channelSelect');
+    select.innerHTML = `<option value="">${t('selectPlaceholder')}</option>`;
+
+    if (data.channels && data.channels.length > 0) {
+      data.channels.forEach(ch => {
+        const opt = document.createElement('option');
+        opt.value = ch.id;
+        opt.textContent = `# ${ch.name}`;
+        select.appendChild(opt);
+      });
+    }
+
+    document.getElementById('channelsLoading').style.display = 'none';
+    select.style.display = 'block';
+  } catch(e) {
+    document.getElementById('channelsLoading').textContent = t('connError');
+  }
 }
 
 function closeModal() {
@@ -196,9 +571,16 @@ function closeModal() {
   currentGuildId = null;
 }
 
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
+  document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}Content`).classList.add('active');
+}
+
 async function saveSettings() {
-  const channelId = document.getElementById('channelInput').value.trim();
-  if (!channelId) { showAlert('أدخل ID القناة', 'error'); return; }
+  const channelId = document.getElementById('channelSelect').value;
+  if (!channelId) { showAlert(t('selectChannel'), 'error'); return; }
   try {
     const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/settings`, {
       method: 'POST',
@@ -207,13 +589,13 @@ async function saveSettings() {
     });
     const data = await res.json();
     if (data.success) {
-      showAlert('تم الحفظ بنجاح ✅', 'success');
+      showAlert(t('saveSuccess'), 'success');
       closeModal();
     } else {
-      showAlert('حدث خطأ: ' + data.error, 'error');
+      showAlert(`${t('saveError')}: ${data.error}`, 'error');
     }
   } catch(e) {
-    showAlert('حدث خطأ في الاتصال', 'error');
+    showAlert(t('connError'), 'error');
   }
 }
 
