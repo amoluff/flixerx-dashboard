@@ -12,31 +12,10 @@ body {
   color: #fff;
   font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* خلفية متحركة */
-body::before {
-  content: '';
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(ellipse at 20% 50%, #7c3aed11 0%, transparent 50%),
-              radial-gradient(ellipse at 80% 20%, #a855f711 0%, transparent 50%);
-  animation: bgMove 8s ease-in-out infinite alternate;
-  z-index: 0;
-  pointer-events: none;
-}
-@keyframes bgMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(30px, 20px); }
 }
 
 .navbar {
-  background: #0d0d1ecc;
-  backdrop-filter: blur(12px);
+  background: #0d0d1e;
   padding: 14px 28px;
   display: flex;
   align-items: center;
@@ -50,9 +29,6 @@ body::before {
   font-size: 20px;
   font-weight: bold;
   color: #a855f7;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 .nav-right {
   display: flex;
@@ -83,12 +59,13 @@ body::before {
 .btn-primary {
   background: linear-gradient(135deg, #7c3aed, #a855f7);
   color: #fff;
-  box-shadow: 0 4px 15px #7c3aed44;
 }
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px #7c3aed66;
+.btn-primary:hover { opacity: 0.9; }
+.btn-success {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: #fff;
 }
+.btn-success:hover { opacity: 0.9; }
 .btn-danger {
   background: #1a0a0a;
   color: #f87171;
@@ -100,18 +77,14 @@ body::before {
   max-width: 960px;
   margin: 0 auto;
   padding: 0 20px;
-  position: relative;
-  z-index: 1;
 }
 
-/* صفحة تسجيل الدخول */
 #loginSection {
   text-align: center;
   padding: 100px 20px;
-  animation: fadeIn 0.6s ease;
 }
 .hero h1 {
-  font-size: 42px;
+  font-size: 38px;
   background: linear-gradient(135deg, #a855f7, #7c3aed);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -119,8 +92,7 @@ body::before {
 }
 .hero p { color: #888; font-size: 16px; margin-bottom: 32px; }
 
-/* كروت السيرفرات */
-#dashSection { animation: fadeIn 0.5s ease; padding: 32px 0; }
+#dashSection { padding: 32px 0; }
 .section-title { color: #a855f7; font-size: 22px; margin-bottom: 6px; }
 .section-sub { color: #555; font-size: 14px; margin-bottom: 28px; }
 
@@ -138,14 +110,11 @@ body::before {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  transition: 0.25s;
-  animation: fadeUp 0.4s ease both;
-  cursor: default;
+  transition: 0.2s;
 }
 .guild-card:hover {
-  border-color: #7c3aed88;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px #7c3aed22;
+  border-color: #7c3aed66;
+  transform: translateY(-2px);
 }
 .guild-icon {
   width: 62px;
@@ -182,7 +151,6 @@ body::before {
   border-color: #333;
 }
 
-/* Modal */
 .modal {
   display: none;
   position: fixed;
@@ -191,9 +159,8 @@ body::before {
   z-index: 200;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(4px);
 }
-.modal.active { display: flex; animation: fadeIn 0.2s ease; }
+.modal.active { display: flex; }
 .modal-box {
   background: #0f0f1e;
   border: 1px solid #7c3aed55;
@@ -201,7 +168,6 @@ body::before {
   padding: 28px;
   width: 92%;
   max-width: 480px;
-  animation: slideUp 0.3s ease;
 }
 .modal-box h2 { color: #a855f7; margin-bottom: 6px; font-size: 18px; }
 .modal-guild-name { color: #666; font-size: 13px; margin-bottom: 20px; }
@@ -230,7 +196,7 @@ body::before {
 }
 
 .tab-content { display: none; }
-.tab-content.active { display: block; animation: fadeIn 0.2s ease; }
+.tab-content.active { display: block; }
 
 .input-group { margin-bottom: 16px; }
 .input-group label {
@@ -239,24 +205,46 @@ body::before {
   color: #888;
   font-size: 13px;
 }
-.select-channel {
+
+.search-box {
   width: 100%;
-  padding: 11px 14px;
+  padding: 10px 14px;
   background: #0a0a14;
   border: 1px solid #7c3aed44;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
   color: #fff;
   font-size: 14px;
   outline: none;
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23a855f7' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: left 12px center;
-  padding-left: 32px;
+  border-bottom: none;
 }
-.select-channel:focus { border-color: #a855f7; }
-.select-channel option { background: #0f0f1e; }
+.search-box:focus { border-color: #a855f7; }
+.search-box::placeholder { color: #444; }
+
+.channels-list {
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #0a0a14;
+  border: 1px solid #7c3aed44;
+  border-radius: 0 0 10px 10px;
+}
+.channels-list::-webkit-scrollbar { width: 4px; }
+.channels-list::-webkit-scrollbar-track { background: #0a0a14; }
+.channels-list::-webkit-scrollbar-thumb { background: #7c3aed44; border-radius: 4px; }
+
+.channel-item {
+  padding: 9px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #aaa;
+  transition: 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.channel-item:hover { background: #7c3aed22; color: #fff; }
+.channel-item.selected { background: #7c3aed33; color: #a855f7; }
+.channel-item .ch-icon { color: #555; font-size: 13px; }
 
 .loading-channels {
   text-align: center;
@@ -267,27 +255,19 @@ body::before {
 
 .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
 
-/* Alerts */
 .alert {
   padding: 11px 18px;
   border-radius: 10px;
   margin-bottom: 16px;
   font-size: 13px;
-  animation: fadeIn 0.3s ease;
 }
 .alert-success { background: #0a2a0a; color: #4ade80; border: 1px solid #4ade8033; }
 .alert-error { background: #2a0a0a; color: #f87171; border: 1px solid #f8717133; }
 
 .loading { text-align: center; padding: 60px; color: #444; }
 
-/* Animations */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-/* Responsive */
 @media (max-width: 600px) {
-  .hero h1 { font-size: 28px; }
+  .hero h1 { font-size: 26px; }
   .navbar { padding: 12px 16px; }
   .guilds-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
   .guild-card { padding: 16px 12px; }
@@ -319,13 +299,12 @@ body::before {
     <h2 class="section-title" id="sectionTitle">سيرفراتك</h2>
     <p class="section-sub" id="sectionSub">السيرفرات المشتركة بينك وبين FlixerX</p>
     <div id="guildsList" class="guilds-grid">
-      <div class="loading" id="loadingText">جاري التحميل...</div>
+      <div class="loading">جاري التحميل...</div>
     </div>
   </div>
 
 </div>
 
-<!-- Modal -->
 <div class="modal" id="settingsModal">
   <div class="modal-box">
     <h2 id="modalTitle">⚙️ إعدادات السيرفر</h2>
@@ -340,15 +319,16 @@ body::before {
         <label id="channelLabel">قناة الاقتراحات</label>
         <div id="channelsContainer">
           <div class="loading-channels" id="channelsLoading">جاري تحميل القنوات...</div>
-          <select class="select-channel" id="channelSelect" style="display:none">
-            <option value="" id="selectPlaceholder">اختر قناة...</option>
-          </select>
+          <div id="channelPickerWrap" style="display:none">
+            <input type="text" class="search-box" id="channelSearch" placeholder="🔍 ابحث عن قناة..." oninput="filterChannels()">
+            <div class="channels-list" id="channelsList"></div>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="modal-actions">
-      <button class="btn btn-primary" onclick="saveSettings()" id="saveBtn">💾 حفظ</button>
+      <button class="btn btn-success" onclick="saveSettings()" id="saveBtn">✅ إرسال</button>
       <button class="btn btn-danger" onclick="closeModal()" id="cancelBtn">إلغاء</button>
     </div>
   </div>
@@ -362,6 +342,8 @@ const REDIRECT_URI = 'https://amoluff.github.io/flixerx-dashboard/callback';
 let accessToken = null;
 let currentGuildId = null;
 let currentLang = 'ar';
+let allChannels = [];
+let selectedChannelId = null;
 
 const translations = {
   ar: {
@@ -370,23 +352,22 @@ const translations = {
     loginBtn: 'تسجيل الدخول بـ Discord',
     sectionTitle: 'سيرفراتك',
     sectionSub: 'السيرفرات المشتركة بينك وبين FlixerX',
-    loading: 'جاري التحميل...',
     noGuilds: 'ما في سيرفرات مشتركة',
     admin: 'أدمن',
     member: 'عضو',
-    settings: '⚙️ الإعدادات',
+    settings: 'الإعدادات',
     modalTitle: '⚙️ إعدادات السيرفر',
     tabSuggestions: '📝 الاقتراحات',
     channelLabel: 'قناة الاقتراحات',
     channelsLoading: 'جاري تحميل القنوات...',
-    selectPlaceholder: 'اختر قناة...',
-    saveBtn: '💾 حفظ',
+    saveBtn: '✅ إرسال',
     cancelBtn: 'إلغاء',
     logout: 'خروج',
     saveSuccess: 'تم الحفظ بنجاح ✅',
     saveError: 'حدث خطأ',
     connError: 'حدث خطأ في الاتصال',
     selectChannel: 'اختر قناة أولاً',
+    searchPlaceholder: '🔍 ابحث عن قناة...',
     dir: 'rtl'
   },
   en: {
@@ -395,23 +376,22 @@ const translations = {
     loginBtn: 'Login with Discord',
     sectionTitle: 'Your Servers',
     sectionSub: 'Servers shared between you and FlixerX',
-    loading: 'Loading...',
     noGuilds: 'No shared servers',
     admin: 'Admin',
     member: 'Member',
-    settings: '⚙️ Settings',
+    settings: 'Settings',
     modalTitle: '⚙️ Server Settings',
     tabSuggestions: '📝 Suggestions',
     channelLabel: 'Suggestions Channel',
     channelsLoading: 'Loading channels...',
-    selectPlaceholder: 'Select a channel...',
-    saveBtn: '💾 Save',
+    saveBtn: '✅ Save',
     cancelBtn: 'Cancel',
     logout: 'Logout',
     saveSuccess: 'Saved successfully ✅',
     saveError: 'An error occurred',
     connError: 'Connection error',
     selectChannel: 'Please select a channel first',
+    searchPlaceholder: '🔍 Search channels...',
     dir: 'ltr'
   }
 };
@@ -427,13 +407,6 @@ function toggleLang() {
 }
 
 function updateTexts() {
-  const ids = ['heroTitle','heroSub','loginBtn','sectionTitle','sectionSub',
-                'loadingText','modalTitle','tabSuggestions','channelLabel',
-                'channelsLoading','selectPlaceholder','saveBtn','cancelBtn'];
-  ids.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = t(id.replace('Text','').replace('Btn','Btn'));
-  });
   document.getElementById('heroTitle').textContent = t('heroTitle');
   document.getElementById('heroSub').textContent = t('heroSub');
   document.getElementById('loginBtn').textContent = t('loginBtn');
@@ -444,6 +417,7 @@ function updateTexts() {
   document.getElementById('channelLabel').textContent = t('channelLabel');
   document.getElementById('saveBtn').textContent = t('saveBtn');
   document.getElementById('cancelBtn').textContent = t('cancelBtn');
+  document.getElementById('channelSearch').placeholder = t('searchPlaceholder');
 }
 
 async function checkCallback() {
@@ -513,12 +487,12 @@ async function loadGuilds() {
       return;
     }
 
-    list.innerHTML = data.guilds.map((g, i) => {
+    list.innerHTML = data.guilds.map(g => {
       const icon = g.icon
         ? `<img src="https://cdn.discordapp.com/icons/${g.id}/${g.icon}.png" alt="">`
         : g.name.charAt(0);
       return `
-        <div class="guild-card" style="animation-delay:${i * 0.05}s">
+        <div class="guild-card">
           <div class="guild-icon">${icon}</div>
           <div class="guild-name">${g.name}</div>
           ${g.isAdmin
@@ -533,12 +507,41 @@ async function loadGuilds() {
   }
 }
 
+function filterChannels() {
+  const q = document.getElementById('channelSearch').value.toLowerCase();
+  const filtered = allChannels.filter(c => c.name.toLowerCase().includes(q));
+  renderChannels(filtered);
+}
+
+function renderChannels(channels) {
+  const list = document.getElementById('channelsList');
+  if (channels.length === 0) {
+    list.innerHTML = `<div class="loading-channels" style="padding:12px">ما في نتائج</div>`;
+    return;
+  }
+  list.innerHTML = channels.map(ch => `
+    <div class="channel-item ${selectedChannelId === ch.id ? 'selected' : ''}" onclick="selectChannel('${ch.id}', '${ch.name.replace(/'/g,"\\'")}')">
+      <span class="ch-icon">#</span> ${ch.name}
+    </div>
+  `).join('');
+}
+
+function selectChannel(id, name) {
+  selectedChannelId = id;
+  renderChannels(allChannels.filter(c => c.name.toLowerCase().includes(
+    document.getElementById('channelSearch').value.toLowerCase()
+  )));
+}
+
 async function openModal(guildId, guildName) {
   currentGuildId = guildId;
+  selectedChannelId = null;
+  allChannels = [];
   document.getElementById('modalGuildName').textContent = guildName;
-  document.getElementById('channelSelect').style.display = 'none';
+  document.getElementById('channelPickerWrap').style.display = 'none';
   document.getElementById('channelsLoading').style.display = 'block';
   document.getElementById('channelsLoading').textContent = t('channelsLoading');
+  document.getElementById('channelSearch').value = '';
   document.getElementById('settingsModal').classList.add('active');
 
   try {
@@ -547,20 +550,14 @@ async function openModal(guildId, guildName) {
     });
     const data = await res.json();
 
-    const select = document.getElementById('channelSelect');
-    select.innerHTML = `<option value="">${t('selectPlaceholder')}</option>`;
-
     if (data.channels && data.channels.length > 0) {
-      data.channels.forEach(ch => {
-        const opt = document.createElement('option');
-        opt.value = ch.id;
-        opt.textContent = `# ${ch.name}`;
-        select.appendChild(opt);
-      });
+      allChannels = data.channels;
+      renderChannels(allChannels);
+      document.getElementById('channelsLoading').style.display = 'none';
+      document.getElementById('channelPickerWrap').style.display = 'block';
+    } else {
+      document.getElementById('channelsLoading').textContent = 'ما في قنوات';
     }
-
-    document.getElementById('channelsLoading').style.display = 'none';
-    select.style.display = 'block';
   } catch(e) {
     document.getElementById('channelsLoading').textContent = t('connError');
   }
@@ -569,6 +566,7 @@ async function openModal(guildId, guildName) {
 function closeModal() {
   document.getElementById('settingsModal').classList.remove('active');
   currentGuildId = null;
+  selectedChannelId = null;
 }
 
 function switchTab(tab) {
@@ -579,13 +577,15 @@ function switchTab(tab) {
 }
 
 async function saveSettings() {
-  const channelId = document.getElementById('channelSelect').value;
-  if (!channelId) { showAlert(t('selectChannel'), 'error'); return; }
+  if (!selectedChannelId) { showAlert(t('selectChannel'), 'error'); return; }
   try {
     const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/settings`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ channel_id: channelId, token: accessToken })
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({ channel_id: selectedChannelId })
     });
     const data = await res.json();
     if (data.success) {
