@@ -296,6 +296,86 @@ body {
 
 .divider { border: none; border-top: 1px solid #7c3aed22; margin: 20px 0; }
 
+/* ── Replies Modal ── */
+.reply-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: #0a0a14;
+  border: 1px solid #7c3aed22;
+  border-radius: 9px;
+  margin-bottom: 7px;
+  transition: 0.15s;
+}
+.reply-item:hover { border-color: #7c3aed55; }
+.reply-item.checked { border-color: #a855f7; background: #12122a; }
+.reply-checkbox {
+  width: 16px; height: 16px;
+  accent-color: #a855f7;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.reply-info { flex: 1; min-width: 0; }
+.reply-trigger { font-size: 13px; color: #eee; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.reply-content { font-size: 11px; color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.reply-role-dot { width: 8px; height: 8px; border-radius: 50%; background: #444; flex-shrink: 0; }
+.reply-actions-row { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+.btn-xs {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+.btn-xs-primary { background: linear-gradient(135deg,#7c3aed,#a855f7); color:#fff; }
+.btn-xs-primary:hover { opacity:0.9; }
+.btn-xs-danger { background:#1a0a0a; color:#f87171; border:1px solid #f8717133; }
+.btn-xs-danger:hover { background:#f87171; color:#fff; }
+.btn-xs-secondary { background:#1a1a2e; color:#a855f7; border:1px solid #7c3aed33; }
+.btn-xs-secondary:hover { background:#7c3aed22; }
+.replies-list { max-height: 260px; overflow-y: auto; padding-right: 2px; }
+.replies-list::-webkit-scrollbar { width: 4px; }
+.replies-list::-webkit-scrollbar-thumb { background:#7c3aed44; border-radius:4px; }
+.add-reply-form { background:#0a0a14; border:1px solid #7c3aed33; border-radius:10px; padding:14px; margin-bottom:12px; }
+.add-reply-form input, .add-reply-form textarea {
+  width:100%; padding:8px 12px; background:#0d0d1e; border:1px solid #7c3aed33;
+  border-radius:8px; color:#fff; font-size:13px; outline:none; margin-bottom:8px;
+  font-family: inherit;
+}
+.add-reply-form input:focus, .add-reply-form textarea:focus { border-color:#a855f7; }
+.add-reply-form input::placeholder, .add-reply-form textarea::placeholder { color:#444; }
+.add-reply-form textarea { resize: vertical; min-height: 60px; }
+.form-label { color:#888; font-size:11px; margin-bottom:4px; display:block; }
+.bulk-bar {
+  background:#12122a; border:1px solid #7c3aed44; border-radius:9px;
+  padding:10px 12px; margin-bottom:10px; display:none;
+  align-items:center; gap:8px; flex-wrap:wrap;
+}
+.bulk-bar.visible { display:flex; }
+.bulk-count { color:#a855f7; font-size:13px; font-weight:bold; flex:1; }
+.confirm-overlay {
+  position:absolute; inset:0; background:#000000cc; border-radius:20px;
+  display:none; align-items:center; justify-content:center; z-index:10;
+}
+.confirm-overlay.active { display:flex; }
+.confirm-box {
+  background:#0f0f1e; border:1px solid #f8717144; border-radius:14px;
+  padding:24px; text-align:center; max-width:280px; width:90%;
+}
+.confirm-box p { color:#eee; font-size:14px; margin-bottom:18px; }
+.confirm-actions { display:flex; gap:10px; justify-content:center; }
+
+/* role picker mini */
+.role-pick-mini {
+  max-height:140px; overflow-y:auto; background:#0a0a14;
+  border:1px solid #7c3aed33; border-radius:0 0 8px 8px; margin-bottom:8px;
+}
+.role-pick-mini::-webkit-scrollbar { width:3px; }
+.role-pick-mini::-webkit-scrollbar-thumb { background:#7c3aed44; border-radius:3px; }
+
 @media (max-width: 600px) {
   .hero h1 { font-size: 26px; }
   .navbar { padding: 12px 16px; }
@@ -360,6 +440,11 @@ body {
         <div class="settings-card-title" id="cardRolesTitle">الرتب التلقائية</div>
         <div class="settings-card-sub" id="cardRolesSub">رتبة الأعضاء والبوتات</div>
       </div>
+      <div class="settings-card" onclick="openAutoRepliesModal()">
+        <div class="settings-card-icon">💬</div>
+        <div class="settings-card-title">الردود التلقائية</div>
+        <div class="settings-card-sub">إدارة ردود السيرفر</div>
+      </div>
     </div>
   </div>
 
@@ -421,6 +506,79 @@ body {
       <button class="btn btn-danger" onclick="clearAutoRole('bot')">🗑️ إزالة</button>
     </div>
 
+  </div>
+</div>
+
+<!-- Modal: الردود التلقائية -->
+<div class="modal" id="autoRepliesModal">
+  <div class="modal-box" style="max-width:560px;position:relative;">
+    <button class="modal-close" onclick="closeModal('autoRepliesModal')">✕</button>
+    <div class="modal-title">💬 الردود التلقائية</div>
+    <div class="modal-sub">إدارة ردود السيرفر — اضغط على الرد لتحديده</div>
+    <div id="repliesAlertBox"></div>
+
+    <!-- شريط الإجراءات الجماعية -->
+    <div class="bulk-bar" id="bulkBar">
+      <span class="bulk-count" id="bulkCount">0 محدد</span>
+      <button class="btn-xs btn-xs-secondary" onclick="openBulkRoleModal()">🎭 تعديل رتبة</button>
+      <button class="btn-xs btn-xs-danger" onclick="confirmBulkDelete()">🗑️ حذف المحدد</button>
+      <button class="btn-xs btn-xs-secondary" onclick="clearSelection()">✕ إلغاء</button>
+    </div>
+
+    <!-- شريط الإجراءات العلوي -->
+    <div class="reply-actions-row">
+      <button class="btn-xs btn-xs-primary" onclick="toggleAddForm()">➕ إضافة رد</button>
+      <button class="btn-xs btn-xs-secondary" onclick="selectAllReplies()">☑️ تحديد الكل</button>
+    </div>
+
+    <!-- فورم إضافة رد -->
+    <div class="add-reply-form" id="addReplyForm" style="display:none">
+      <label class="form-label">الكلمة المحركة (trigger)</label>
+      <input type="text" id="newTrigger" placeholder="مثال: مرحبا">
+      <label class="form-label">الرد</label>
+      <textarea id="newContent" placeholder="نص الرد التلقائي..."></textarea>
+      <label class="form-label">رتبة مطلوبة (اختياري)</label>
+      <input type="text" id="roleSearchAdd" placeholder="🔍 ابحث عن رتبة..." oninput="filterRolesAdd()">
+      <div class="role-pick-mini" id="rolesListAdd"></div>
+      <div style="display:flex;gap:8px;margin-top:4px;">
+        <button class="btn-xs btn-xs-primary" onclick="submitAddReply()">✅ إضافة</button>
+        <button class="btn-xs btn-xs-secondary" onclick="toggleAddForm()">إلغاء</button>
+      </div>
+    </div>
+
+    <!-- قائمة الردود -->
+    <div class="replies-list" id="repliesList">
+      <div class="loading-pick">جاري التحميل...</div>
+    </div>
+
+    <!-- تأكيد الحذف المفرد -->
+    <div class="confirm-overlay" id="confirmOverlay">
+      <div class="confirm-box">
+        <p id="confirmText">هل تريد حذف هذا الرد؟</p>
+        <div class="confirm-actions">
+          <button class="btn btn-danger" onclick="doDelete()" style="flex:1;padding:9px;font-size:13px;">🗑️ حذف</button>
+          <button class="btn" onclick="closeConfirm()" style="flex:1;padding:9px;font-size:13px;background:#1a1a2e;color:#888;border:1px solid #333;">إلغاء</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: تعديل رتبة جماعي -->
+<div class="modal" id="bulkRoleModal">
+  <div class="modal-box" style="max-width:400px;">
+    <button class="modal-close" onclick="closeModal('bulkRoleModal')">✕</button>
+    <div class="modal-title">🎭 تعديل رتبة المحدد</div>
+    <div class="modal-sub">اختر رتبة للردود المحددة أو أزل الرتبة</div>
+    <div id="bulkRoleAlertBox"></div>
+    <input type="text" class="search-box" id="bulkRoleSearch" placeholder="🔍 ابحث عن رتبة..." oninput="filterRolesBulk()">
+    <div class="pick-list" id="bulkRolesList" style="margin-bottom:14px;">
+      <div class="loading-pick">جاري التحميل...</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-success" onclick="saveBulkRole()">✅ تطبيق</button>
+      <button class="btn btn-danger" onclick="removeBulkRole()">🗑️ إزالة الرتبة</button>
+    </div>
   </div>
 </div>
 
@@ -720,6 +878,261 @@ async function clearAutoRole(type) {
       showAlert('arAlertBox','تم الإزالة بنجاح ✅','success');
     } else showAlert('arAlertBox', `${t('saveError')}: ${data.error}`, 'error');
   } catch(e) { showAlert('arAlertBox', t('connError'), 'error'); }
+}
+
+// ── Auto Replies ──────────────────────────────────────────────────────────
+let allReplies = [];
+let selectedReplies = new Set();
+let pendingDeleteTrigger = null;
+let selectedBulkRoleId = null;
+let addReplyRoleId = null;
+
+async function openAutoRepliesModal() {
+  allReplies = [];
+  selectedReplies.clear();
+  selectedBulkRoleId = null;
+  addReplyRoleId = null;
+  document.getElementById('addReplyForm').style.display = 'none';
+  document.getElementById('newTrigger').value = '';
+  document.getElementById('newContent').value = '';
+  document.getElementById('roleSearchAdd').value = '';
+  document.getElementById('repliesList').innerHTML = '<div class="loading-pick">جاري التحميل...</div>';
+  updateBulkBar();
+  document.getElementById('autoRepliesModal').classList.add('active');
+
+  try {
+    const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-replies`,
+      { headers:{ Authorization:`Bearer ${accessToken}` } });
+    const data = await res.json();
+    allReplies = data.replies || [];
+    renderReplies();
+  } catch(e) {
+    document.getElementById('repliesList').innerHTML = '<div class="loading-pick">حدث خطأ</div>';
+  }
+
+  // تحميل الرتب في الخلفية
+  if (!allRoles.length) {
+    try {
+      const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/roles`,
+        { headers:{ Authorization:`Bearer ${accessToken}` } });
+      const data = await res.json();
+      allRoles = data.roles || [];
+    } catch(e) {}
+  }
+  renderRolesAdd();
+}
+
+function renderReplies() {
+  const el = document.getElementById('repliesList');
+  if (!allReplies.length) { el.innerHTML = '<div class="loading-pick">لا توجد ردود — أضف أول رد!</div>'; return; }
+  el.innerHTML = allReplies.map(r => {
+    const checked = selectedReplies.has(r.trigger);
+    const role = allRoles.find(ro => ro.id === r.role_id);
+    const dotColor = role ? roleColor(role.color) : '#444';
+    const contents = (() => { try { const p=JSON.parse(r.content); return Array.isArray(p)?p.join(' / '):r.content; } catch{ return r.content; } })();
+    return `<div class="reply-item ${checked?'checked':''}" onclick="toggleReplySelect('${r.trigger.replace(/'/g,"\'")}',event)">
+      <input type="checkbox" class="reply-checkbox" ${checked?'checked':''} onclick="event.stopPropagation();toggleReplySelect('${r.trigger.replace(/'/g,"\'")}',event)">
+      <div class="reply-info">
+        <div class="reply-trigger">${r.trigger}</div>
+        <div class="reply-content">${contents}</div>
+      </div>
+      <div class="reply-role-dot" style="background:${dotColor}" title="${role?role.name:'بدون رتبة'}"></div>
+      <button class="btn-xs btn-xs-danger" onclick="event.stopPropagation();askDelete('${r.trigger.replace(/'/g,"\'")}')">🗑️</button>
+    </div>`;
+  }).join('');
+}
+
+function toggleReplySelect(trigger, e) {
+  if (e.target.tagName === 'BUTTON') return;
+  if (selectedReplies.has(trigger)) selectedReplies.delete(trigger);
+  else selectedReplies.add(trigger);
+  updateBulkBar();
+  renderReplies();
+}
+
+function selectAllReplies() {
+  if (selectedReplies.size === allReplies.length) selectedReplies.clear();
+  else allReplies.forEach(r => selectedReplies.add(r.trigger));
+  updateBulkBar();
+  renderReplies();
+}
+
+function clearSelection() { selectedReplies.clear(); updateBulkBar(); renderReplies(); }
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  const count = selectedReplies.size;
+  document.getElementById('bulkCount').textContent = `${count} محدد`;
+  if (count > 0) bar.classList.add('visible'); else bar.classList.remove('visible');
+}
+
+function toggleAddForm() {
+  const form = document.getElementById('addReplyForm');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+function filterRolesAdd() {
+  const q = document.getElementById('roleSearchAdd').value.toLowerCase();
+  renderRolesAdd(allRoles.filter(r => r.name.toLowerCase().includes(q)));
+}
+function renderRolesAdd(roles) {
+  const list = roles !== undefined ? roles : allRoles;
+  const el = document.getElementById('rolesListAdd');
+  if (!list.length) { el.innerHTML = '<div class="loading-pick" style="padding:8px">ما في رتب</div>'; return; }
+  el.innerHTML = `<div class="pick-item ${addReplyRoleId===null?'selected':''}" onclick="selectAddRole(null)">
+    <div class="role-dot" style="background:#444"></div>بدون رتبة
+  </div>` + list.map(r =>
+    `<div class="pick-item ${addReplyRoleId===r.id?'selected':''}" onclick="selectAddRole('${r.id}')">
+      <div class="role-dot" style="background:${roleColor(r.color)}"></div>${r.name}
+    </div>`).join('');
+}
+function selectAddRole(id) { addReplyRoleId = id; renderRolesAdd(); }
+
+async function submitAddReply() {
+  const trigger = document.getElementById('newTrigger').value.trim();
+  const content = document.getElementById('newContent').value.trim();
+  if (!trigger || !content) { showAlert('repliesAlertBox','اكتب الكلمة المحركة والرد','error'); return; }
+  try {
+    const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-replies`, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${accessToken}` },
+      body: JSON.stringify({ trigger, content, role_id: addReplyRoleId })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showAlert('repliesAlertBox', t('saveSuccess'), 'success');
+      document.getElementById('newTrigger').value = '';
+      document.getElementById('newContent').value = '';
+      addReplyRoleId = null;
+      document.getElementById('addReplyForm').style.display = 'none';
+      allReplies = allReplies.filter(r => r.trigger !== trigger);
+      allReplies.unshift({ trigger, content, role_id: addReplyRoleId });
+      renderReplies();
+    } else showAlert('repliesAlertBox', `${t('saveError')}: ${data.error}`, 'error');
+  } catch(e) { showAlert('repliesAlertBox', t('connError'), 'error'); }
+}
+
+function askDelete(trigger) {
+  pendingDeleteTrigger = trigger;
+  document.getElementById('confirmText').textContent = `هل تريد حذف الرد "${trigger}"؟`;
+  document.getElementById('confirmOverlay').classList.add('active');
+}
+function closeConfirm() {
+  pendingDeleteTrigger = null;
+  document.getElementById('confirmOverlay').classList.remove('active');
+}
+async function doDelete() {
+  if (!pendingDeleteTrigger) return;
+  const trigger = pendingDeleteTrigger;
+  closeConfirm();
+  try {
+    const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-replies/delete`, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${accessToken}` },
+      body: JSON.stringify({ trigger })
+    });
+    const data = await res.json();
+    if (data.success) {
+      allReplies = allReplies.filter(r => r.trigger !== trigger);
+      selectedReplies.delete(trigger);
+      updateBulkBar();
+      renderReplies();
+      showAlert('repliesAlertBox','تم الحذف ✅','success');
+    } else showAlert('repliesAlertBox', `${t('saveError')}: ${data.error}`, 'error');
+  } catch(e) { showAlert('repliesAlertBox', t('connError'), 'error'); }
+}
+
+function confirmBulkDelete() {
+  if (!selectedReplies.size) return;
+  pendingDeleteTrigger = '__bulk__';
+  document.getElementById('confirmText').textContent = `هل تريد حذف ${selectedReplies.size} رد؟`;
+  document.getElementById('confirmOverlay').classList.add('active');
+}
+async function doDelete() {
+  if (!pendingDeleteTrigger) return;
+  if (pendingDeleteTrigger === '__bulk__') {
+    closeConfirm();
+    try {
+      const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-replies/delete-bulk`, {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${accessToken}` },
+        body: JSON.stringify({ triggers: [...selectedReplies] })
+      });
+      const data = await res.json();
+      if (data.success) {
+        allReplies = allReplies.filter(r => !selectedReplies.has(r.trigger));
+        selectedReplies.clear();
+        updateBulkBar();
+        renderReplies();
+        showAlert('repliesAlertBox','تم الحذف ✅','success');
+      } else showAlert('repliesAlertBox', `${t('saveError')}: ${data.error}`, 'error');
+    } catch(e) { showAlert('repliesAlertBox', t('connError'), 'error'); }
+    return;
+  }
+  const trigger = pendingDeleteTrigger;
+  closeConfirm();
+  try {
+    const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-replies/delete`, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${accessToken}` },
+      body: JSON.stringify({ trigger })
+    });
+    const data = await res.json();
+    if (data.success) {
+      allReplies = allReplies.filter(r => r.trigger !== trigger);
+      selectedReplies.delete(trigger);
+      updateBulkBar();
+      renderReplies();
+      showAlert('repliesAlertBox','تم الحذف ✅','success');
+    } else showAlert('repliesAlertBox', `${t('saveError')}: ${data.error}`, 'error');
+  } catch(e) { showAlert('repliesAlertBox', t('connError'), 'error'); }
+}
+
+function openBulkRoleModal() {
+  if (!selectedReplies.size) return;
+  selectedBulkRoleId = null;
+  document.getElementById('bulkRoleSearch').value = '';
+  document.getElementById('bulkRoleModal').classList.add('active');
+  renderRolesBulk(allRoles);
+}
+function filterRolesBulk() {
+  const q = document.getElementById('bulkRoleSearch').value.toLowerCase();
+  renderRolesBulk(allRoles.filter(r => r.name.toLowerCase().includes(q)));
+}
+function renderRolesBulk(roles) {
+  const el = document.getElementById('bulkRolesList');
+  if (!roles.length) { el.innerHTML='<div class="loading-pick">ما في نتائج</div>'; return; }
+  el.innerHTML = roles.map(r =>
+    `<div class="pick-item ${selectedBulkRoleId===r.id?'selected':''}" onclick="selectBulkRole('${r.id}')">
+      <div class="role-dot" style="background:${roleColor(r.color)}"></div>${r.name}
+    </div>`).join('');
+}
+function selectBulkRole(id) { selectedBulkRoleId = id; filterRolesBulk(); }
+
+async function saveBulkRole() {
+  if (!selectedBulkRoleId) { showAlert('bulkRoleAlertBox','اختر رتبة أولاً','error'); return; }
+  await applyBulkRole(selectedBulkRoleId);
+}
+async function removeBulkRole() { await applyBulkRole(null); }
+async function applyBulkRole(roleId) {
+  try {
+    const res = await fetch(`${WORKER_URL}/guild/${currentGuildId}/auto-replies/update-role-bulk`, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', Authorization:`Bearer ${accessToken}` },
+      body: JSON.stringify({ triggers:[...selectedReplies], role_id: roleId })
+    });
+    const data = await res.json();
+    if (data.success) {
+      allReplies = allReplies.map(r =>
+        selectedReplies.has(r.trigger) ? { ...r, role_id: roleId } : r
+      );
+      selectedReplies.clear();
+      updateBulkBar();
+      renderReplies();
+      closeModal('bulkRoleModal');
+      showAlert('repliesAlertBox', roleId ? 'تم تعديل الرتبة ✅' : 'تم إزالة الرتبة ✅', 'success');
+    } else showAlert('bulkRoleAlertBox', `${t('saveError')}: ${data.error}`, 'error');
+  } catch(e) { showAlert('bulkRoleAlertBox', t('connError'), 'error'); }
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────
